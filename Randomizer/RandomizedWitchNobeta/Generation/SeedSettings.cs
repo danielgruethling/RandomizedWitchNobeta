@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MessagePack;
+using RandomizedWitchNobeta.Config.Serialization;
+using System;
 using System.IO.Hashing;
-using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
-using System.Text.Unicode;
-using MessagePack;
-using RandomizedWitchNobeta.Config.Serialization;
 
 namespace RandomizedWitchNobeta.Generation;
 
@@ -37,9 +34,9 @@ public class SeedSettings
     public GameDifficulty Difficulty = GameDifficulty.Advanced;
 
     [JsonInclude, Key(2)]
-    public StartLevelSetting StartLevel = StartLevelSetting.Random;
+    public StartLevelSetting StartLevel = StartLevelSetting.OkunShrine;
     [JsonInclude, Key(3)]
-    public bool ShuffleExits = true;
+    public bool ShuffleExits = false;
 
     [JsonInclude, Key(22)]
     public bool GameTips = true;
@@ -87,6 +84,16 @@ public class SeedSettings
     public int ItemWeightHoly = 1;
     [JsonInclude, Key(20)]
     public int ItemWeightArcane = 2;
+    [JsonInclude, Key(23)]
+    public bool Archipelago = false;
+    [JsonInclude, Key(24)]
+    public string ArchipelagoHostname = "archipelago.gg";
+    [JsonInclude, Key(25)]
+    public int ArchipelagoPort = 38281;
+    [JsonInclude, Key(26)]
+    public string ArchipelagoSlotName = "Player";
+    [JsonInclude, Key(27)]
+    public string ArchipelagoPassword = string.Empty;
 
     public void Apply(SeedSettings other)
     {
@@ -121,6 +128,12 @@ public class SeedSettings
         ItemWeightDefense = other.ItemWeightDefense;
         ItemWeightHoly = other.ItemWeightHoly;
         ItemWeightArcane = other.ItemWeightArcane;
+
+        Archipelago = other.Archipelago;
+        ArchipelagoHostname = other.ArchipelagoHostname;
+        ArchipelagoPort = other.ArchipelagoPort;
+        ArchipelagoSlotName = other.ArchipelagoSlotName;
+        ArchipelagoPassword = other.ArchipelagoPassword;
     }
 
     public int Hash()

@@ -1,27 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomizedWitchNobeta", "RandomizedWitchNobeta\RandomizedWitchNobeta.csproj", "{2FD197B9-D535-463C-855F-F354B16E3E64}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomizedWitchNobeta", "RandomizedWitchNobeta\RandomizedWitchNobeta.csproj", "{2FD197B9-D535-463C-855F-F354B16E3E64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickableTransparentOverlay", "..\..\ClickableTransparentOverlay\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj", "{74305EDE-2EDD-436C-9117-6D9F1E591E69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickableTransparentOverlay", "ClickableTransparentOverlay\ClickableTransparentOverlay.csproj", "{A0EF3D10-DBA4-409D-88AD-865606F2CFFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
 		NOUI|Any CPU = NOUI|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2FD197B9-D535-463C-855F-F354B16E3E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FD197B9-D535-463C-855F-F354B16E3E64}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FD197B9-D535-463C-855F-F354B16E3E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FD197B9-D535-463C-855F-F354B16E3E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FD197B9-D535-463C-855F-F354B16E3E64}.NOUI|Any CPU.ActiveCfg = NOUI|Any CPU
 		{2FD197B9-D535-463C-855F-F354B16E3E64}.NOUI|Any CPU.Build.0 = NOUI|Any CPU
-		{74305EDE-2EDD-436C-9117-6D9F1E591E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74305EDE-2EDD-436C-9117-6D9F1E591E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74305EDE-2EDD-436C-9117-6D9F1E591E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74305EDE-2EDD-436C-9117-6D9F1E591E69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74305EDE-2EDD-436C-9117-6D9F1E591E69}.NOUI|Any CPU.ActiveCfg = NOUI|Any CPU
-		{74305EDE-2EDD-436C-9117-6D9F1E591E69}.NOUI|Any CPU.Build.0 = NOUI|Any CPU
+		{2FD197B9-D535-463C-855F-F354B16E3E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD197B9-D535-463C-855F-F354B16E3E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0EF3D10-DBA4-409D-88AD-865606F2CFFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0EF3D10-DBA4-409D-88AD-865606F2CFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0EF3D10-DBA4-409D-88AD-865606F2CFFF}.NOUI|Any CPU.ActiveCfg = NOUI|Any CPU
+		{A0EF3D10-DBA4-409D-88AD-865606F2CFFF}.NOUI|Any CPU.Build.0 = NOUI|Any CPU
+		{A0EF3D10-DBA4-409D-88AD-865606F2CFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0EF3D10-DBA4-409D-88AD-865606F2CFFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

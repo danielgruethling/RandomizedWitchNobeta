@@ -22,6 +22,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Archipelago.MultiClient.Net" Version="5.0.6" />
         <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
         <PackageReference Include="Enums.NET" Version="4.0.1" />
@@ -32,6 +33,10 @@
         <PackageReference Include="TextCopy" Version="6.2.1" />
         <PackageReference Include="TupleAsJsonArray" Version="1.0.2" />
         <PackageReference Include="WeightedRandomizer" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -435,9 +440,5 @@
         <HintPath>lib\interop\UnityEngine.XRModule.dll</HintPath>
         <Private>False</Private>
       </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj" />
     </ItemGroup>
 </Project>
