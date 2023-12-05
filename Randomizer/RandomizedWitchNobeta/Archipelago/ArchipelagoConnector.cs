@@ -15,7 +15,7 @@ namespace RandomizedWitchNobeta.Archipelago.Net
         public static SeedSettings ConnectAP(string server, string slotName, string password)
         {
             SeedSettings settings = null;
-            StreamWriter sw = new(Path.Combine("debug.log"));
+            StreamWriter sw = new(Path.Combine("debug.log"), false);
 
             Session = ArchipelagoSessionFactory.CreateSession(server);
             var result = Session.TryConnectAndLogin("Little Witch Nobeta", slotName, ItemsHandlingFlags.AllItems);
