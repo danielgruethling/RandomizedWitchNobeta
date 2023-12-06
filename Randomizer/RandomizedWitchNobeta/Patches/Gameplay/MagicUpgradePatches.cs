@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using RandomizedWitchNobeta.Archipelago.Net;
+using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Generation;
 using RandomizedWitchNobeta.Utils;
 
@@ -42,7 +44,11 @@ public static class MagicUpgradePatches
         // Track boss death
         if (NpcUtils.ValidBosses.Contains(__instance.name) && __instance.GetIsDeath())
         {
-            if (runtimeVariables.KilledBosses.Add(__instance.name))
+            if(runtimeVariables.Settings.Archipelago)
+            {
+                ArchipelagoConnector.Session.Locations.CompleteLocationChecks(ArchipelagoConnector.Session.Locations.GetLocationIdFromName("Little Witch Nobeta", ArchipelagoData.GameLocationToDescriptiveLocation(__instance.name)));
+            }
+            else if (runtimeVariables.KilledBosses.Add(__instance.name))
             {
                 // A boss has been killed, increase global magic level since it's the first time it got killed
                 if (runtimeVariables.Settings.MagicUpgrade == SeedSettings.MagicUpgradeMode.BossKill && runtimeVariables.GlobalMagicLevel < 5)

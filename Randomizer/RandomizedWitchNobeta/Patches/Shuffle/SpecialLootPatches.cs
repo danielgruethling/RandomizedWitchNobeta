@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using RandomizedWitchNobeta.Archipelago.Net;
+using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Utils;
 using System;
 using System.Linq;
@@ -28,7 +30,11 @@ public static class SpecialLootPatches
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (runtimeVariables.CatOverride != ItemSystem.ItemType.Null)
+            if(runtimeVariables.Settings.Archipelago)
+            {
+                ArchipelagoConnector.Session.Locations.CompleteLocationChecks(ArchipelagoConnector.Session.Locations.GetLocationIdFromName("Little Witch Nobeta", "Cat"));
+            }
+            else if (runtimeVariables.CatOverride != ItemSystem.ItemType.Null)
             {
                 Singletons.ItemSystem.itemPoolMap[runtimeVariables.CatOverride]
                     .NewUse(spawnPosition, Quaternion.identity, false);

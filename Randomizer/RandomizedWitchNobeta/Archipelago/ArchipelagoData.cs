@@ -4,7 +4,7 @@ namespace RandomizedWitchNobeta.Archipelago
 {
     public static class ArchipelagoData
     {
-        public static string GameLocationToDescriptiveLocationMap(string gameLocation)
+        public static string GameLocationToDescriptiveLocation(string gameLocation)
         {
             string descriptiveLocation = "";
             switch(gameLocation)
@@ -20,7 +20,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 case "TreasureBox_Room05":
                     descriptiveLocation = "Shrine - Chest Room05";
                     break;
-                case "Specter_Armor":
+                case "Boss_Act01":
                     descriptiveLocation = "Shrine - Specter Armor";
                     break;
                 // shrine_secret_passage_locations
@@ -39,7 +39,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 case "TreasureBox10":
                     descriptiveLocation = "Secret Passage - Chest Room10";
                     break;
-                case "Enraged_Armor":
+                case "Boss_Act01_Plus":
                     descriptiveLocation = "Secret Passage - Enraged Armor";
                     break;
                 // underground_start_locations
@@ -67,7 +67,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 case "TreasureBox_Room08":
                     descriptiveLocation = "Underground - Chest Room08";
                     break;
-                case "Tania":
+                case "Boss_Level02":
                     descriptiveLocation = "Underground - Tania";
                     break;
                 // lava_ruins_start_locations
@@ -99,7 +99,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 case "Room08_TreasureBox":
                     descriptiveLocation = "Lava Ruins - Chest Room08";
                     break;
-                case "Monica":
+                case "Boss_Level03_Big":
                     descriptiveLocation = "Lava Ruins - Monica";
                     break;
                 case "Room01_TreasureBox":
@@ -134,7 +134,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 case "TreasureBox02_Room09To10":
                     descriptiveLocation = "Dark Tunnel - Chest Room05";
                     break;
-                case "Vanessa":
+                case "Boss_Level04":
                     descriptiveLocation = "Dark Tunnel - Vanessa";
                     break;
                 // spirit_realm_start_locations
@@ -161,7 +161,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 case "TreasureBox02_R08":
                     descriptiveLocation = "Spirit Realm - Chest Room08";
                     break;
-                case "Queen_Vanessa_V2":
+                case "Boss_Level05":
                     descriptiveLocation = "Spirit Realm - Queen Vanessa V2";
                     break;
                 // abyss_locations
@@ -191,6 +191,13 @@ namespace RandomizedWitchNobeta.Archipelago
 
         public static Dictionary<string, ItemSystem.ItemType> DescriptiveItemToGameItemMap = new()
         {
+            {"Arcane", ItemSystem.ItemType.MagicNull },
+            {"Ice", ItemSystem.ItemType.MagicIce },
+            {"Fire", ItemSystem.ItemType.MagicFire },
+            {"Thunder", ItemSystem.ItemType.MagicLightning },
+            {"Wind", ItemSystem.ItemType.SkyJump },
+            {"Mana Absorption", ItemSystem.ItemType.Absorb },
+            {"Progressive Bag Upgrade", ItemSystem.ItemType.BagMaxAdd },
             {"Souls", ItemSystem.ItemType.Null }
         };
     }

@@ -1,9 +1,12 @@
 ﻿using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Helpers;
+using Archipelago.MultiClient.Net.Models;
+using RandomizedWitchNobeta.Behaviours;
 using RandomizedWitchNobeta.Generation;
+using RandomizedWitchNobeta.Utils;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace RandomizedWitchNobeta.Archipelago.Net
@@ -15,13 +18,11 @@ namespace RandomizedWitchNobeta.Archipelago.Net
         public static SeedSettings ConnectAP(string server, string slotName, string password)
         {
             SeedSettings settings = null;
-            StreamWriter sw = new(Path.Combine("debug.log"), false);
 
             Session = ArchipelagoSessionFactory.CreateSession(server);
             var result = Session.TryConnectAndLogin("Little Witch Nobeta", slotName, ItemsHandlingFlags.AllItems);
             if(result.Successful)
             {
-                sw.WriteLine("connected");
                 settings = new()
                 {
                     Archipelago = true,
@@ -35,7 +36,6 @@ namespace RandomizedWitchNobeta.Archipelago.Net
                 Dictionary<string, object> slotData = loginSuccess.SlotData;
                 foreach(string option_name in slotData.Keys)
                 {
-                    sw.WriteLine(option_name + "=" + slotData[option_name]);
                     switch (option_name)
                     {
                         case "goal":
@@ -79,13 +79,71 @@ namespace RandomizedWitchNobeta.Archipelago.Net
                     }
                 }
             }
-            else
-            {
-                sw.WriteLine("connection error");
-            }
-            sw.Close();
+
+            Session.Items.ItemReceived += Items_ItemReceived;
 
             return settings;
+        }
+
+        private static void Items_ItemReceived(ReceivedItemsHelper helper)
+        {
+            while(helper.Any())
+            {
+                NetworkItem item = helper.DequeueItem();
+                string itemName = Session.Items.GetItemName(item.Item);
+
+                switch (itemName)
+                {
+                    case "Arcane":
+                        Singletons.GameSave.stats.secretMagicLevel += 1;
+                        break;
+                    case "Ice":
+                        Singletons.GameSave.stats.iceMagicLevel += 1;
+                        break;
+                    case "Fire":
+                        Singletons.GameSave.stats.fireMagicLevel += 1;
+                        break;
+                    case "Thunder":
+                        Singletons.GameSave.stats.thunderMagicLevel += 1;
+                        break;
+                    case "Wind":
+                        Singletons.GameSave.stats.windMagicLevel += 1;
+                        break;
+                    case "Mana Absorption":
+                        Singletons.GameSave.stats.manaAbsorbLevel += 1;
+                        break;
+                    case "Progressive Bag Upgrade": //todo think about how to increase bag
+                        break;
+                    case "Specter Armor Soul":
+                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01");
+                        break;
+                    case "Enraged Armor Soul":
+                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01_Plus");
+                        break;
+                    case "Tania Soul":
+                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level02");
+                        break;
+                    case "Monica Soul":
+                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level03_Big");
+                        break;
+                    case "Vanessa Soul":
+                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level04");
+                        break;
+                    case "Queen Vanessa V2 Soul":
+                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level05");
+                        break;
+                    case "Souls":
+                        Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
+                        break;
+                    default:
+                        break;
+                }
+
+                UnityMainThreadDispatcher.Instance.Enqueue(() =>
+                {
+                    Game.AppearEventPrompt($"Got {itemName} from {Session.Players.GetPlayerName(item.Player)}'s world ({Session.Locations.GetLocationNameFromId(item.Location)}).");
+                });
+            }
         }
     }
 }
