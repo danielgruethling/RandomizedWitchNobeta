@@ -112,7 +112,15 @@ namespace RandomizedWitchNobeta.Archipelago.Net
                     case "Mana Absorption":
                         Singletons.GameSave.stats.manaAbsorbLevel += 1;
                         break;
-                    case "Progressive Bag Upgrade": //todo think about how to increase bag
+                    case "Progressive Bag Upgrade":
+                        Singletons.Dispatcher.Enqueue(() =>
+                        {
+                            var items = Singletons.WizardGirl.g_PlayerItem;
+
+                            items.g_iItemSize += 1;
+                            Singletons.StageUi.itemBar.UpdateItemSize(items.g_iItemSize);
+                            Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
+                        });
                         break;
                     case "Specter Armor Soul":
                         Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01");
@@ -135,15 +143,81 @@ namespace RandomizedWitchNobeta.Archipelago.Net
                     case "Souls":
                         Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
                         break;
+                    case "HPCure":
+                        GiveItem(ItemSystem.ItemType.HPCure);
+                        break;
+                    case "HPCureMiddle":
+                        GiveItem(ItemSystem.ItemType.HPCureMiddle);
+                        break;
+                    case "HPCureBig":
+                        GiveItem(ItemSystem.ItemType.HPCureBig);
+                        break;
+                    case "MPCure":
+                        GiveItem(ItemSystem.ItemType.MPCure);
+                        break;
+                    case "MPCureMiddle":
+                        GiveItem(ItemSystem.ItemType.MPCureMiddle);
+                        break;
+                    case "MPCureBig":
+                        GiveItem(ItemSystem.ItemType.MPCureBig);
+                        break;
+                    case "Defense":
+                        GiveItem(ItemSystem.ItemType.Defense);
+                        break;
+                    case "DefenseMiddle":
+                        GiveItem(ItemSystem.ItemType.DefenseM);
+                        break;
+                    case "DefenseBig":
+                        GiveItem(ItemSystem.ItemType.DefenseB);
+                        break;
+                    case "Trial Key":
+                        GiveItem(ItemSystem.ItemType.SPMaxAdd);
+                        break;
                     default:
                         break;
                 }
 
-                UnityMainThreadDispatcher.Instance.Enqueue(() =>
+                Singletons.Dispatcher.Enqueue(() =>
                 {
                     Game.AppearEventPrompt($"Got {itemName} from {Session.Players.GetPlayerName(item.Player)}'s world ({Session.Locations.GetLocationNameFromId(item.Location)}).");
                 });
             }
+        }
+
+        private static void GiveItem(ItemSystem.ItemType itemType)
+        {
+            Singletons.Dispatcher.Enqueue(() =>
+            {
+                var wizardGirl = Singletons.WizardGirl;
+                var items = wizardGirl.g_PlayerItem;
+
+                // Find first empty slot if there's any
+                for (int i = 0; i < items.g_iItemSize; i++)
+                {
+                    if (items.g_HoldItem[i] == ItemSystem.ItemType.Null)
+                    {
+                        items.g_HoldItem[i] = itemType;
+                        Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
+
+                        return;
+                    }
+                }
+
+                // Replace first slot that is not a Trial Key
+                for(int i = 0; i < items.g_iItemSize; i++)
+                {
+                    if(items.g_HoldItem[i] != ItemSystem.ItemType.SPMaxAdd)
+                    {
+                        items.g_HoldItem[i] = itemType;
+                        Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
+
+                        return;
+                    }
+                }
+
+                // Drop item because it does not fit
+                //TODO
+            });
         }
     }
 }
