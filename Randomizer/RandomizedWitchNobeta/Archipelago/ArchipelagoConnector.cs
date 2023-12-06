@@ -141,7 +141,10 @@ namespace RandomizedWitchNobeta.Archipelago.Net
                         Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level05");
                         break;
                     case "Souls":
-                        Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
+                        Singletons.Dispatcher.Enqueue(() =>
+                        {
+                            Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
+                        });
                         break;
                     case "HPCure":
                         GiveItem(ItemSystem.ItemType.HPCure);
@@ -203,20 +206,24 @@ namespace RandomizedWitchNobeta.Archipelago.Net
                     }
                 }
 
-                // Replace first slot that is not a Trial Key
-                for(int i = 0; i < items.g_iItemSize; i++)
+                // For trial keys replace first slot that is not a Trial Key and create souls for lost item
+                if(itemType == ItemSystem.ItemType.SPMaxAdd)
                 {
-                    if(items.g_HoldItem[i] != ItemSystem.ItemType.SPMaxAdd)
+                    for (int i = 0; i < items.g_iItemSize; i++)
                     {
-                        items.g_HoldItem[i] = itemType;
-                        Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
+                        if (items.g_HoldItem[i] != ItemSystem.ItemType.SPMaxAdd)
+                        {
+                            items.g_HoldItem[i] = itemType;
+                            Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
+                            Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
 
-                        return;
+                            return;
+                        }
                     }
                 }
 
-                // Drop item because it does not fit
-                //TODO
+                // Create souls because item does not fit
+                Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
             });
         }
     }
