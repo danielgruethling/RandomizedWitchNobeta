@@ -5,6 +5,7 @@ using RandomizedWitchNobeta.Generation;
 using RandomizedWitchNobeta.Overlay;
 using RandomizedWitchNobeta.Utils;
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -127,6 +128,10 @@ public static class StartPatches
         generator.Generate();
 
         var runtimeVariables = Singletons.RuntimeVariables;
+
+        StreamWriter sw = new(Path.Combine("archipelago.cfg"));
+        sw.WriteLine($"item_receive_count={0}");
+        sw.Close();
 
         Plugin.Log.LogMessage("Creating save...");
 

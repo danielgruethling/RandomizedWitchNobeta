@@ -2,17 +2,18 @@
 using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
-using RandomizedWitchNobeta.Behaviours;
 using RandomizedWitchNobeta.Generation;
 using RandomizedWitchNobeta.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace RandomizedWitchNobeta.Archipelago.Net
 {
     public static class ArchipelagoConnector
     {
+        private static int itemsReceived = 0;
         public static ArchipelagoSession Session { get; set; }
 
         public static SeedSettings ConnectAP(string server, string slotName, string password)
@@ -20,9 +21,11 @@ namespace RandomizedWitchNobeta.Archipelago.Net
             SeedSettings settings = null;
 
             Session = ArchipelagoSessionFactory.CreateSession(server);
-            var result = Session.TryConnectAndLogin("Little Witch Nobeta", slotName, ItemsHandlingFlags.AllItems);
+            var result = Session.TryConnectAndLogin("Little Witch Nobeta", slotName, ItemsHandlingFlags.AllItems, new("0.4.4"), null, null, password, true);
             if(result.Successful)
             {
+                itemsReceived = 0;
+
                 settings = new()
                 {
                     Archipelago = true,
@@ -87,104 +90,126 @@ namespace RandomizedWitchNobeta.Archipelago.Net
 
         private static void Items_ItemReceived(ReceivedItemsHelper helper)
         {
-            while(helper.Any())
+            // Handle already received items on reconnection
+            StreamReader sr = new(Path.Combine("archipelago.cfg"));
+            string s = sr.ReadLine();
+            sr.Close();
+            Plugin.Log.LogMessage($"Read {s}.");
+            string[] sSplit = s.Trim().Split('=');
+            int receivedCount = Convert.ToInt32(sSplit[1]);
+            if (itemsReceived < receivedCount && s.Contains("item_receive_count"))
             {
-                NetworkItem item = helper.DequeueItem();
-                string itemName = Session.Items.GetItemName(item.Item);
-
-                switch (itemName)
+                // Skip items already received
+                helper.DequeueItem();
+            }
+            else
+            {
+                // Handle newly received items
+                while (helper.Any())
                 {
-                    case "Arcane":
-                        Singletons.GameSave.stats.secretMagicLevel += 1;
-                        break;
-                    case "Ice":
-                        Singletons.GameSave.stats.iceMagicLevel += 1;
-                        break;
-                    case "Fire":
-                        Singletons.GameSave.stats.fireMagicLevel += 1;
-                        break;
-                    case "Thunder":
-                        Singletons.GameSave.stats.thunderMagicLevel += 1;
-                        break;
-                    case "Wind":
-                        Singletons.GameSave.stats.windMagicLevel += 1;
-                        break;
-                    case "Mana Absorption":
-                        Singletons.GameSave.stats.manaAbsorbLevel += 1;
-                        break;
-                    case "Progressive Bag Upgrade":
-                        Singletons.Dispatcher.Enqueue(() =>
-                        {
-                            var items = Singletons.WizardGirl.g_PlayerItem;
+                    NetworkItem item = helper.DequeueItem();
+                    string itemName = Session.Items.GetItemName(item.Item);
 
-                            items.g_iItemSize += 1;
-                            Singletons.StageUi.itemBar.UpdateItemSize(items.g_iItemSize);
-                            Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
-                        });
-                        break;
-                    case "Specter Armor Soul":
-                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01");
-                        break;
-                    case "Enraged Armor Soul":
-                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01_Plus");
-                        break;
-                    case "Tania Soul":
-                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level02");
-                        break;
-                    case "Monica Soul":
-                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level03_Big");
-                        break;
-                    case "Vanessa Soul":
-                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level04");
-                        break;
-                    case "Queen Vanessa V2 Soul":
-                        Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level05");
-                        break;
-                    case "Souls":
-                        Singletons.Dispatcher.Enqueue(() =>
-                        {
-                            Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
-                        });
-                        break;
-                    case "HPCure":
-                        GiveItem(ItemSystem.ItemType.HPCure);
-                        break;
-                    case "HPCureMiddle":
-                        GiveItem(ItemSystem.ItemType.HPCureMiddle);
-                        break;
-                    case "HPCureBig":
-                        GiveItem(ItemSystem.ItemType.HPCureBig);
-                        break;
-                    case "MPCure":
-                        GiveItem(ItemSystem.ItemType.MPCure);
-                        break;
-                    case "MPCureMiddle":
-                        GiveItem(ItemSystem.ItemType.MPCureMiddle);
-                        break;
-                    case "MPCureBig":
-                        GiveItem(ItemSystem.ItemType.MPCureBig);
-                        break;
-                    case "Defense":
-                        GiveItem(ItemSystem.ItemType.Defense);
-                        break;
-                    case "DefenseMiddle":
-                        GiveItem(ItemSystem.ItemType.DefenseM);
-                        break;
-                    case "DefenseBig":
-                        GiveItem(ItemSystem.ItemType.DefenseB);
-                        break;
-                    case "Trial Key":
-                        GiveItem(ItemSystem.ItemType.SPMaxAdd);
-                        break;
-                    default:
-                        break;
+                    switch (itemName)
+                    {
+                        case "Arcane":
+                            Singletons.GameSave.stats.secretMagicLevel += 1;
+                            break;
+                        case "Ice":
+                            Singletons.GameSave.stats.iceMagicLevel += 1;
+                            break;
+                        case "Fire":
+                            Singletons.GameSave.stats.fireMagicLevel += 1;
+                            break;
+                        case "Thunder":
+                            Singletons.GameSave.stats.thunderMagicLevel += 1;
+                            break;
+                        case "Wind":
+                            Singletons.GameSave.stats.windMagicLevel += 1;
+                            break;
+                        case "Mana Absorption":
+                            Singletons.GameSave.stats.manaAbsorbLevel += 1;
+                            break;
+                        case "Progressive Bag Upgrade":
+                            Singletons.Dispatcher.Enqueue(() =>
+                            {
+                                var items = Singletons.WizardGirl.g_PlayerItem;
+
+                                items.g_iItemSize += 1;
+                                Singletons.StageUi.itemBar.UpdateItemSize(items.g_iItemSize);
+                                Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
+                            });
+                            break;
+                        case "Specter Armor Soul":
+                            Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01");
+                            break;
+                        case "Enraged Armor Soul":
+                            Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01_Plus");
+                            break;
+                        case "Tania Soul":
+                            Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level02");
+                            break;
+                        case "Monica Soul":
+                            Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level03_Big");
+                            break;
+                        case "Vanessa Soul":
+                            Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level04");
+                            break;
+                        case "Queen Vanessa V2 Soul":
+                            Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level05");
+                            break;
+                        case "Souls":
+                            Singletons.Dispatcher.Enqueue(() =>
+                            {
+                                Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
+                            });
+                            break;
+                        case "HPCure":
+                            GiveItem(ItemSystem.ItemType.HPCure);
+                            break;
+                        case "HPCureMiddle":
+                            GiveItem(ItemSystem.ItemType.HPCureMiddle);
+                            break;
+                        case "HPCureBig":
+                            GiveItem(ItemSystem.ItemType.HPCureBig);
+                            break;
+                        case "MPCure":
+                            GiveItem(ItemSystem.ItemType.MPCure);
+                            break;
+                        case "MPCureMiddle":
+                            GiveItem(ItemSystem.ItemType.MPCureMiddle);
+                            break;
+                        case "MPCureBig":
+                            GiveItem(ItemSystem.ItemType.MPCureBig);
+                            break;
+                        case "Defense":
+                            GiveItem(ItemSystem.ItemType.Defense);
+                            break;
+                        case "DefenseMiddle":
+                            GiveItem(ItemSystem.ItemType.DefenseM);
+                            break;
+                        case "DefenseBig":
+                            GiveItem(ItemSystem.ItemType.DefenseB);
+                            break;
+                        case "Trial Key":
+                            GiveItem(ItemSystem.ItemType.SPMaxAdd);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Singletons.Dispatcher.Enqueue(() =>
+                    {
+                        Game.AppearEventPrompt($"Got {itemName} from {Session.Players.GetPlayerName(item.Player)}'s world ({Session.Locations.GetLocationNameFromId(item.Location)}).");
+                    });
                 }
 
-                Singletons.Dispatcher.Enqueue(() =>
-                {
-                    Game.AppearEventPrompt($"Got {itemName} from {Session.Players.GetPlayerName(item.Player)}'s world ({Session.Locations.GetLocationNameFromId(item.Location)}).");
-                });
+                StreamWriter sw = new(Path.Combine("archipelago.cfg"));
+                sw.WriteLine($"item_receive_count={Session.Items.AllItemsReceived.Count}");
+                sw.Close();
             }
+
+            itemsReceived++;
         }
 
         private static void GiveItem(ItemSystem.ItemType itemType)

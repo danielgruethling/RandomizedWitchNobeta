@@ -87,7 +87,7 @@ public class SeedSettings
     [JsonInclude, Key(23)]
     public bool Archipelago = false;
     [JsonInclude, Key(24)]
-    public string ArchipelagoHostname = "localhost";//"archipelago.gg";
+    public string ArchipelagoHostname = "archipelago.gg";
     [JsonInclude, Key(25)]
     public int ArchipelagoPort = 38281;
     [JsonInclude, Key(26)]
