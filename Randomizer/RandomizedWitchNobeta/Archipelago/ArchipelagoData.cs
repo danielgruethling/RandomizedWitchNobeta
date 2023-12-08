@@ -132,7 +132,7 @@ namespace RandomizedWitchNobeta.Archipelago
                     descriptiveLocation = "Dark Tunnel - Chest Room08";
                     break;
                 case "TreasureBox02_Room09To10":
-                    descriptiveLocation = "Dark Tunnel - Chest Room05";
+                    descriptiveLocation = "Dark Tunnel - Chest Room09To10";
                     break;
                 case "Boss_Level04":
                     descriptiveLocation = "Dark Tunnel - Vanessa";
@@ -145,11 +145,11 @@ namespace RandomizedWitchNobeta.Archipelago
                     descriptiveLocation = "Spirit Realm - Chest Room03";
                     break;
                 case "TreasureBox02_R0401":
-                    descriptiveLocation = "Spirit Realm - Chest Room04To01";
+                    descriptiveLocation = "Spirit Realm - Chest Room04_01";
                     break;
                 // spirit_realm_after_arcane_barrier_locations
                 case "TreasureBox02_R0402":
-                    descriptiveLocation = "Spirit Realm - Chest Room04To02";
+                    descriptiveLocation = "Spirit Realm - Chest Room04_02";
                     break;
                 case "TreasureBox02_R06":
                     descriptiveLocation = "Spirit Realm - Chest Room06";
@@ -173,13 +173,13 @@ namespace RandomizedWitchNobeta.Archipelago
                     break;
                 // abyss_trials_locations
                 case "Act04Room05To06_TreasureBox":
-                    descriptiveLocation = "Abyss - Chest Underground Trial";
-                    break;
-                case "Act05_TreasureBox02_Room09To10":
                     descriptiveLocation = "Abyss - Chest Lava Ruins Trial";
                     break;
-                case "Act03TreasureBox_Room05_02":
+                case "Act05_TreasureBox02_Room09To10":
                     descriptiveLocation = "Abyss - Chest Dark Tunnel Trial";
+                    break;
+                case "Act03TreasureBox_Room05_02":
+                    descriptiveLocation = "Abyss - Chest Underground Trial";
                     break;
                 case "Nonota":
                     descriptiveLocation = "Abyss - Nonota";

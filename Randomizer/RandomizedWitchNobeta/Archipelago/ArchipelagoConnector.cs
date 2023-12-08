@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace RandomizedWitchNobeta.Archipelago.Net
+namespace RandomizedWitchNobeta.Archipelago
 {
     public static class ArchipelagoConnector
     {

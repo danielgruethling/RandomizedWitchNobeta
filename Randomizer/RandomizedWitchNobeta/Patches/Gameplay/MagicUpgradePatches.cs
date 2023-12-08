@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using RandomizedWitchNobeta.Archipelago.Net;
 using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Generation;
 using RandomizedWitchNobeta.Utils;

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
+using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Packets;
 using HarmonyLib;
+using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Utils;
 
 namespace RandomizedWitchNobeta.Patches.UI;
@@ -21,6 +24,12 @@ public static class RunCompletePatches
         {
             Plugin.Log.LogDebug("Timer ended!");
             Singletons.Timers.End();
+            if(runtimeVariables.Settings.Archipelago)
+            {
+                var statusUpdatePacket = new StatusUpdatePacket();
+                statusUpdatePacket.Status = ArchipelagoClientState.ClientGoal;
+                ArchipelagoConnector.Session.Socket.SendPacket(statusUpdatePacket);
+            }
         }
     }
 

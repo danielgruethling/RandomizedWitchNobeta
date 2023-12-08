@@ -1,7 +1,7 @@
 ﻿using EnumsNET;
 using Humanizer;
 using ImGuiNET;
-using RandomizedWitchNobeta.Archipelago.Net;
+using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Bonus;
 using RandomizedWitchNobeta.Generation;
 using RandomizedWitchNobeta.Patches.UI;

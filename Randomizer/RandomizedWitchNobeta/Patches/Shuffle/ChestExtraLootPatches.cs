@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using RandomizedWitchNobeta.Archipelago;
-using RandomizedWitchNobeta.Archipelago.Net;
 using RandomizedWitchNobeta.Utils;
 
 namespace RandomizedWitchNobeta.Patches.Shuffle;
