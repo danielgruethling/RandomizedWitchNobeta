@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using HarmonyLib;
+using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Utils;
 using UnityEngine;
 
@@ -29,6 +32,12 @@ public static class StatueUnlockPatches
     [HarmonyPostfix]
     private static void OnWizardGirlUpdate(WizardGirlManage __instance)
     {
+        if(Singletons.SceneManager.stageId > 1 && __instance.GetPlayerStatus() == NobetaState.SavePointUI)
+        {
+            // Check if new items received while offline
+            ArchipelagoConnector.HandleItems();
+        }
+
         if (_statues is null)
         {
             return;
