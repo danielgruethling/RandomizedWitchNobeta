@@ -25,7 +25,7 @@ public static class Singletons
     public static UIPauseMenu UIPauseMenu { get; private set; }
     public static GameUIManager GameUIManager { get; private set; }
 
-    public static int APItemReceiveCount { get; set; }
+    public static int APItemReceiveCount { get; set; } = 0;
 
     public static bool SaveLoaded => GameSave is not null;
 
