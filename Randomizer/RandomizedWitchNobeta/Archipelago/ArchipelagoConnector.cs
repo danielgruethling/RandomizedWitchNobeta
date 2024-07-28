@@ -151,31 +151,51 @@ namespace RandomizedWitchNobeta.Archipelago
                 while (PendingItemsHelper.Any())
                 {
                     NetworkItem item = PendingItemsHelper.First();
-                    string itemName = Session.Items.GetItemName(item.Item);
+
+                    string itemName = $"Unknown Item {item.Item}";
+                    try
+                    {
+                        itemName = Session.Items.GetItemName(item.Item);
+                    }
+                    catch (Exception) { }
+
+                    string senderName = $"Unknown player {item.Player}";
+                    try
+                    {
+                        senderName = Session.Players.GetPlayerName(item.Player);
+                    }
+                    catch (Exception) { }
+
+                    string senderLocationName = $"Unknown location {item.Location}";
+                    try
+                    {
+                        senderName = Session.Locations.GetLocationNameFromId(item.Location);
+                    }
+                    catch (Exception) { }
 
                     Plugin.Log.LogMessage($"Received item count: {Session.Items.AllItemsReceived.Count}. PendingItemsHelperCount {PendingItemsHelper.Count}");
 
-                    switch (itemName)
+                    switch (item.Item)
                     {
-                        case "Arcane":
+                        case 345600000:
                             Singletons.GameSave.stats.secretMagicLevel += 1;
                             break;
-                        case "Ice":
+                        case 345600001:
                             Singletons.GameSave.stats.iceMagicLevel += 1;
                             break;
-                        case "Fire":
+                        case 345600002:
                             Singletons.GameSave.stats.fireMagicLevel += 1;
                             break;
-                        case "Thunder":
+                        case 345600003:
                             Singletons.GameSave.stats.thunderMagicLevel += 1;
                             break;
-                        case "Wind":
+                        case 345600004:
                             Singletons.GameSave.stats.windMagicLevel += 1;
                             break;
-                        case "Mana Absorption":
+                        case 345600005:
                             Singletons.GameSave.stats.manaAbsorbLevel += 1;
                             break;
-                        case "Progressive Bag Upgrade":
+                        case 345600006:
                             Singletons.Dispatcher.Enqueue(() =>
                             {
                                 var items = Singletons.WizardGirl.g_PlayerItem;
@@ -185,58 +205,58 @@ namespace RandomizedWitchNobeta.Archipelago
                                 Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
                             });
                             break;
-                        case "Specter Armor Soul":
+                        case 345600007:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01");
                             break;
-                        case "Enraged Armor Soul":
+                        case 345600010:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01_Plus");
                             break;
-                        case "Tania Soul":
+                        case 345600008:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level02");
                             break;
-                        case "Monica Soul":
+                        case 345600009:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level03_Big");
                             break;
-                        case "Vanessa Soul":
+                        case 345600011:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level04");
                             break;
-                        case "Queen Vanessa V2 Soul":
+                        case 345600012:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level05");
                             break;
-                        case "Souls":
+                        case 345600022:
                             Singletons.Dispatcher.Enqueue(() =>
                             {
                                 Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
                             });
                             break;
-                        case "HPCure":
+                        case 345600013:
                             GiveItem(ItemSystem.ItemType.HPCure);
                             break;
-                        case "HPCureMiddle":
+                        case 345600014:
                             GiveItem(ItemSystem.ItemType.HPCureMiddle);
                             break;
-                        case "HPCureBig":
+                        case 345600015:
                             GiveItem(ItemSystem.ItemType.HPCureBig);
                             break;
-                        case "MPCure":
+                        case 345600016:
                             GiveItem(ItemSystem.ItemType.MPCure);
                             break;
-                        case "MPCureMiddle":
+                        case 345600017:
                             GiveItem(ItemSystem.ItemType.MPCureMiddle);
                             break;
-                        case "MPCureBig":
+                        case 345600018:
                             GiveItem(ItemSystem.ItemType.MPCureBig);
                             break;
-                        case "Defense":
+                        case 345600019:
                             GiveItem(ItemSystem.ItemType.Defense);
                             break;
-                        case "DefenseMiddle":
+                        case 345600020:
                             GiveItem(ItemSystem.ItemType.DefenseM);
                             break;
-                        case "DefenseBig":
+                        case 345600021:
                             GiveItem(ItemSystem.ItemType.DefenseB);
                             break;
-                        case "Trial Key":
+                        case 345600024:
                             GiveItem(ItemSystem.ItemType.SPMaxAdd);
                             break;
                         default:
@@ -250,7 +270,7 @@ namespace RandomizedWitchNobeta.Archipelago
 
                     Singletons.Dispatcher.Enqueue(() =>
                     {
-                        Game.AppearEventPrompt($"Got {itemName} from {Session.Players.GetPlayerName(item.Player)}'s world ({Session.Locations.GetLocationNameFromId(item.Location)}).");
+                        Game.AppearEventPrompt($"Got {itemName} from {senderName}'s world ({senderLocationName}).");
                     });
                 }
             }
