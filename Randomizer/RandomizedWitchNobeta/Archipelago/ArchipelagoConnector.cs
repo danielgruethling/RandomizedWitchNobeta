@@ -15,7 +15,7 @@ namespace RandomizedWitchNobeta.Archipelago
     {
         public static ArchipelagoSession Session { get; set; }
 
-        private static List<NetworkItem> PendingItemsHelper { get; } = new();
+        private static List<ItemInfo> PendingItemsHelper { get; } = new();
 
         public static SeedSettings ConnectAP(string server, string slotName, string password)
         {
@@ -125,7 +125,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 {
                     // Handle newly received items
                     var item = helper.DequeueItem();
-                    Plugin.Log.LogMessage($"Received {item.Item} from {item.Location}");
+                    Plugin.Log.LogMessage($"Received {item.ItemDisplayName} from {item.LocationDisplayName}");
                     PendingItemsHelper.Add(item);
                 }
 
@@ -150,12 +150,12 @@ namespace RandomizedWitchNobeta.Archipelago
                 // Handle newly received items
                 while (PendingItemsHelper.Any())
                 {
-                    NetworkItem item = PendingItemsHelper.First();
+                    ItemInfo item = PendingItemsHelper.First();
 
-                    string itemName = $"Unknown Item {item.Item}";
+                    string itemName = $"Unknown Item {item.ItemId}";
                     try
                     {
-                        itemName = Session.Items.GetItemName(item.Item);
+                        itemName = item.ItemDisplayName;
                     }
                     catch (Exception) { }
 
@@ -166,16 +166,16 @@ namespace RandomizedWitchNobeta.Archipelago
                     }
                     catch (Exception) { }
 
-                    string senderLocationName = $"Unknown location {item.Location}";
+                    string senderLocationName = $"Unknown location {item.LocationId}";
                     try
                     {
-                        senderName = Session.Locations.GetLocationNameFromId(item.Location);
+                        senderName = item.ItemDisplayName;
                     }
                     catch (Exception) { }
 
                     Plugin.Log.LogMessage($"Received item count: {Session.Items.AllItemsReceived.Count}. PendingItemsHelperCount {PendingItemsHelper.Count}");
 
-                    switch (item.Item)
+                    switch (item.ItemId)
                     {
                         case 345600000:
                             Singletons.GameSave.stats.secretMagicLevel += 1;

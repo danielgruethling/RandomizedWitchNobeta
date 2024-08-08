@@ -22,12 +22,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Archipelago.MultiClient.Net" Version="5.0.6" />
+        <PackageReference Include="Archipelago.MultiClient.Net" Version="6.3.0" />
         <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
-        <PackageReference Include="Enums.NET" Version="4.0.1" />
+        <PackageReference Include="Enums.NET" Version="5.0.0" />
         <PackageReference Include="Humanizer.Core" Version="2.14.1" />
-        <PackageReference Include="MessagePack" Version="2.5.124" />
+        <PackageReference Include="MessagePack" Version="2.5.172" />
         <PackageReference Include="NativeFileDialogSharp" Version="0.6.0-alpha" />
         <PackageReference Include="System.IO.Hashing" Version="6.0.2" />
         <PackageReference Include="TextCopy" Version="6.2.1" />
