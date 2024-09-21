@@ -1,4 +1,6 @@
-﻿namespace RandomizedWitchNobeta.Generation.Models;
+﻿using RandomizedWitchNobeta.Shared;
+
+namespace RandomizedWitchNobeta.Generation.Models;
 
 public class InventoryState
 {
@@ -12,6 +14,8 @@ public class InventoryState
     public int TokenAmount { get; set; } = 0;
 
     public int BossKilled { get; set; } = 0;
+
+    public int ChestOpened { get; set; } = 0;
 
     public InventoryState(SeedSettings seedSettings)
     {

@@ -2,7 +2,7 @@
 using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
-using RandomizedWitchNobeta.Generation;
+using RandomizedWitchNobeta.Shared;
 using RandomizedWitchNobeta.Utils;
 using System;
 using System.Collections.Generic;
@@ -68,7 +68,7 @@ namespace RandomizedWitchNobeta.Archipelago
                             break;
 
                         case "difficulty":
-                            settings.Difficulty = (GameDifficulty)(long)slotData[option_name];
+                            settings.Difficulty = (SeedSettings.GameDifficulty)(long)slotData[option_name];
                                 break;
 
                         case "trial_keys":

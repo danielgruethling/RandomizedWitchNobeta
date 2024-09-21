@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using RandomizedWitchNobeta.Behaviours;
-using RandomizedWitchNobeta.Patches;
-using RandomizedWitchNobeta.Timer;
+using RandomizedWitchNobeta.Features;
+using RandomizedWitchNobeta.Features.Timer;
 using UnityEngine;
 
 namespace RandomizedWitchNobeta.Utils;
@@ -24,6 +24,8 @@ public static class Singletons
     public static Timers Timers { get; set; }
     public static UIPauseMenu UIPauseMenu { get; private set; }
     public static GameUIManager GameUIManager { get; private set; }
+
+    public static SettingsService SettingsService { get; set; }
 
     public static int APItemReceiveCount { get; set; } = 0;
 

@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Description>Little Witch Nobeta randomizer plugin</Description>
-        <Version>1.1.7</Version>
+        <Version>1.2.2</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
         <RestoreAdditionalProjectSources>
@@ -12,7 +12,7 @@
             https://nuget.samboy.dev/v3/index.json
         </RestoreAdditionalProjectSources>
         <RootNamespace>RandomizedWitchNobeta</RootNamespace>
-        <Configurations>Debug;Release;NOUI</Configurations>
+        <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
         <PackageId>RandomizedWitchNobeta</PackageId>
     </PropertyGroup>
@@ -28,15 +28,14 @@
         <PackageReference Include="Enums.NET" Version="5.0.0" />
         <PackageReference Include="Humanizer.Core" Version="2.14.1" />
         <PackageReference Include="MessagePack" Version="2.5.172" />
-        <PackageReference Include="NativeFileDialogSharp" Version="0.6.0-alpha" />
+        <PackageReference Include="PolySharp" Version="1.14.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="System.IO.Hashing" Version="6.0.2" />
-        <PackageReference Include="TextCopy" Version="6.2.1" />
+        <PackageReference Include="System.Text.Json" Version="8.0.4" />
         <PackageReference Include="TupleAsJsonArray" Version="1.0.2" />
         <PackageReference Include="WeightedRandomizer" Version="2.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -440,5 +439,9 @@
         <HintPath>lib\interop\UnityEngine.XRModule.dll</HintPath>
         <Private>False</Private>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RandomizedWitchNobeta.Shared\RandomizedWitchNobeta.Shared.csproj" />
     </ItemGroup>
 </Project>
