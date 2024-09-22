@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Description>Little Witch Nobeta randomizer plugin</Description>
-        <Version>1.2.2</Version>
+        <Version>1.2.2-Archipelago-0.2alpha</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
         <RestoreAdditionalProjectSources>
@@ -22,10 +22,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Archipelago.MultiClient.Net" Version="6.3.0" />
+        <PackageReference Include="Archipelago.MultiClient.Net" Version="6.3.1" />
         <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
-        <PackageReference Include="Enums.NET" Version="5.0.0" />
         <PackageReference Include="Humanizer.Core" Version="2.14.1" />
         <PackageReference Include="MessagePack" Version="2.5.172" />
         <PackageReference Include="PolySharp" Version="1.14.1">

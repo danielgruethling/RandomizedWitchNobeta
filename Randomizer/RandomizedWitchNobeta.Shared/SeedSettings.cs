@@ -1,7 +1,6 @@
-﻿using System.IO.Hashing;
+﻿using MessagePack;
+using System.IO.Hashing;
 using System.Text;
-using System.Text.Json.Serialization;
-using MessagePack;
 
 namespace RandomizedWitchNobeta.Shared;
 
@@ -102,6 +101,17 @@ public class SeedSettings
     public int ItemWeightHoly { get; set; } = 1;
     [Key(20)]
     public int ItemWeightArcane { get; set; } = 2;
+
+    [Key(24)]
+    public bool Archipelago = false;
+    [Key(25)]
+    public string ArchipelagoHostname = "archipelago.gg";
+    [Key(26)]
+    public int ArchipelagoPort = 38281;
+    [Key(27)]
+    public string ArchipelagoSlotName = "Player";
+    [Key(28)]
+    public string ArchipelagoPassword = string.Empty;
 
     public int Hash(string gameVersionText, string randomizerVersionText)
     {

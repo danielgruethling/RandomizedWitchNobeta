@@ -11,9 +11,9 @@ public static class WorldGraph
 
     public const int ChestsCount = 45;
 
-    public static readonly List<RegionExit> Exits = new();
+    public static readonly List<RegionExit> Exits = [];
 
-    public static readonly List<ItemLocation> ItemLocations = new();
+    public static readonly List<ItemLocation> ItemLocations = [];
 
     public static readonly Dictionary<int, Region> Regions = new()
     {
@@ -23,11 +23,11 @@ public static class WorldGraph
 
                 Exits = null,
 
-                ItemLocations = new []
-                {
+                ItemLocations =
+                [
                     ChestItem("TreasureBox_Room03", 2),
                     ChestItem("TreasureBox02_Room03", 2)
-                },
+                ],
 
                 NextRegion = new RegionTransition
                 {
@@ -41,16 +41,16 @@ public static class WorldGraph
                         FriendlyName = "Shrine - Armor Hall",
                         ContainsBoss = true,
 
-                        Exits = new []
-                        {
+                        Exits =
+                        [
                             Exit(2, 3, -1),
                             Exit(2, 3, 2)
-                        },
+                        ],
 
-                        ItemLocations = new []
-                        {
+                        ItemLocations =
+                        [
                             ChestItem("TreasureBox_Room05", 2)
-                        },
+                        ],
 
                         NextRegion = new RegionTransition
                         {
@@ -64,19 +64,19 @@ public static class WorldGraph
                                 FriendlyName = "Shrine - Secret Passage",
                                 ContainsBoss = true,
 
-                                Exits = new []
-                                {
+                                Exits =
+                                [
                                     Exit(2, 5, 5)
-                                },
+                                ],
 
-                                ItemLocations = new []
-                                {
+                                ItemLocations =
+                                [
                                     ChestItem("TreasureBox07", 2),
                                     ChestItem("TreasureBox07To08", 2),
                                     ChestItem("TreasureBox08", 2),
                                     ChestItem("TreasureBox09", 2),
                                     ChestItem("TreasureBox10", 2)
-                                },
+                                ],
 
                                 NextRegion = null
                             }
@@ -91,15 +91,15 @@ public static class WorldGraph
 
                 Exits = null,
 
-                ItemLocations = new []
-                {
+                ItemLocations =
+                [
                     ChestItem("TreasureBox_Room01", 3),
                     ChestItem("TreasureBox_Room03", 3),
                     ChestItem("TreasureBox_Room04", 3),
                     ChestItem("TreasureBox_Room05_01", 3),
                     ChestItem("TreasureBox_Room05_02", 3),
                     CatItem()
-                },
+                ],
 
                 NextRegion = new RegionTransition
                 {
@@ -110,17 +110,17 @@ public static class WorldGraph
                         FriendlyName = "Underground - Tania",
                         ContainsBoss = true,
 
-                        Exits = new []
-                        {
+                        Exits =
+                        [
                             Exit(3, 2, 2),
                             Exit(3, 4, 3),
                             Exit(3, 4, 2)
-                        },
+                        ],
 
-                        ItemLocations = new []
-                        {
+                        ItemLocations =
+                        [
                             ChestItem("TreasureBox_Room08", 3)
-                        },
+                        ],
 
                         NextRegion = null
                     }
@@ -133,8 +133,8 @@ public static class WorldGraph
 
                 Exits = null,
 
-                ItemLocations = new []
-                {
+                ItemLocations =
+                [
                     ChestItem("Room02_TreasureBox01", 4),
                     ChestItem("Room02_TreasureBox02", 4),
                     ChestItem("Room03_TreasureBox01", 4),
@@ -142,7 +142,7 @@ public static class WorldGraph
                     ChestItem("Room02To04_TreasureBox02", 4),
                     ChestItem("Room05To06_TreasureBox", 4),
                     ChestItem("Room06_TreasureBox", 4)
-                },
+                ],
 
                 NextRegion = new RegionTransition
                 {
@@ -156,18 +156,18 @@ public static class WorldGraph
                         FriendlyName = "Lava Ruins - After Fire Barrier",
                         ContainsBoss = true,
 
-                        Exits = new []
-                        {
+                        Exits =
+                        [
                             Exit(4, 3, 4),
                             Exit(4, 5, 3)
-                        },
+                        ],
 
-                        ItemLocations = new []
-                        {
+                        ItemLocations =
+                        [
                             ChestItem("Room07_TreasureBox", 4),
                             ChestItem("Room08_TreasureBox", 4),
                             ChestItem("Room01_TreasureBox", 4)
-                        },
+                        ],
 
                         NextRegion = null
                     }
@@ -181,14 +181,14 @@ public static class WorldGraph
 
                 Exits = null,
 
-                ItemLocations = new []
-                {
+                ItemLocations =
+                [
                     ChestItem("TreasureBox02_Room02_03", 5),
                     ChestItem("TreasureBox02_Room03_02", 5),
                     ChestItem("TreasureBox02_Room03_01", 5),
                     ChestItem("TreasureBox02_Room04", 5),
                     ChestItem("TreasureBox02_Room05", 5)
-                },
+                ],
 
                 NextRegion = new RegionTransition
                 {
@@ -199,19 +199,19 @@ public static class WorldGraph
                         FriendlyName = "Dark Tunnel - After Thunder",
                         ContainsBoss = true,
 
-                        Exits = new []
-                        {
+                        Exits =
+                        [
                             Exit(5, 2, 5),
                             Exit(5, 6, -1)
-                        },
+                        ],
 
-                        ItemLocations = new []
-                        {
+                        ItemLocations =
+                        [
                             ChestItem("TreasureBox02_Room06To07", 5),
                             ChestItem("TreasureBox02_Room07", 5),
                             ChestItem("TreasureBox02_Room08", 5),
                             ChestItem("TreasureBox02_Room09To10", 5)
-                        },
+                        ],
 
                         NextRegion = null
                     }
@@ -225,12 +225,12 @@ public static class WorldGraph
 
                 Exits = null,
 
-                ItemLocations = new []
-                {
+                ItemLocations =
+                [
                     ChestItem("TreasureBox02_R02", 6),
                     ChestItem("TreasureBox02_R03", 6),
                     ChestItem("TreasureBox02_R0401", 6)
-                },
+                ],
 
                 NextRegion = new RegionTransition
                 {
@@ -242,12 +242,12 @@ public static class WorldGraph
 
                         Exits = null,
 
-                        ItemLocations = new []
-                        {
+                        ItemLocations =
+                        [
                             ChestItem("TreasureBox02_R0402", 6),
                             ChestItem("TreasureBox02_R06", 6),
                             ChestItem("TreasureBox02_R07", 6)
-                        },
+                        ],
 
                         NextRegion = new RegionTransition
                         {
@@ -261,15 +261,15 @@ public static class WorldGraph
                                 FriendlyName = "Spirit Realm - After Teleport",
                                 ContainsBoss = true,
 
-                                Exits = new []
-                                {
+                                Exits =
+                                [
                                     Exit(6, 7, -1)
-                                },
+                                ],
 
-                                ItemLocations = new []
-                                {
+                                ItemLocations =
+                                [
                                     ChestItem("TreasureBox02_R08", 6)
-                                },
+                                ],
 
                                 NextRegion = null
                             }
@@ -285,11 +285,11 @@ public static class WorldGraph
 
                 Exits = null,
 
-                ItemLocations = new []
-                {
+                ItemLocations =
+                [
                     ChestItem("TreasureBox_Act02Room04", 7),
                     ChestItem("TreasureBox_Act02Room05", 7)
-                },
+                ],
 
                 NextRegion = new RegionTransition
                 {
@@ -307,12 +307,12 @@ public static class WorldGraph
 
                         Exits = null,
 
-                        ItemLocations = new []
-                        {
+                        ItemLocations =
+                        [
                             ChestItem("Act04Room05To06_TreasureBox", 7),
                             ChestItem("Act05_TreasureBox02_Room09To10", 7),
                             ChestItem("Act03TreasureBox_Room05_02", 7)
-                        },
+                        ],
 
                         NextRegion = null
                     }

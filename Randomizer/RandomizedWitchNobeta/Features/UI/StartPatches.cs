@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using MarsSDK;
+using RandomizedWitchNobeta.Config.Serialization;
 using RandomizedWitchNobeta.Features.Bonus;
 using RandomizedWitchNobeta.Generation;
 using RandomizedWitchNobeta.Shared;
@@ -153,7 +154,7 @@ public static class StartPatches
     private static void StartRandomizer()
     {
         // Make sure bonus settings are loaded correctly
-        Singletons.SettingsService.ReloadBonusSettings();
+        SettingsService.ReloadBonusSettings();
 
         // Fetch seed settings
         SeedSettings settings;

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using RandomizedWitchNobeta.Config.Serialization;
+﻿using RandomizedWitchNobeta.Config.Serialization;
 using RandomizedWitchNobeta.Features.Bonus;
 using RandomizedWitchNobeta.Features.UI;
 using RandomizedWitchNobeta.Shared;
+using System;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace RandomizedWitchNobeta.Features;
@@ -42,6 +41,8 @@ public sealed class SettingsService
         _watcher.Created += WatcherOnChanged;
         _watcher.Changed += WatcherOnChanged;
 
+        /* disable web settings for now
+
         // Create web api process and pass settings path
         var serverProcess = Process.Start(new ProcessStartInfo(ServerExecutablePath)
         {
@@ -50,16 +51,19 @@ public sealed class SettingsService
         });
 
         Plugin.Log.LogInfo("Settings server started, starting read loop...");
+        */
 
         // Wait until exit
         await Task.Delay(-1, cancellationToken);
 
+        /*
         Plugin.Log.LogInfo("Stopping settings server...");
 
         serverProcess?.Close();
+        */
     }
 
-    public void ReloadBonusSettings(BonusSettings bonusSettings = null)
+    public static void ReloadBonusSettings(BonusSettings bonusSettings = null)
     {
         if (bonusSettings is null)
         {

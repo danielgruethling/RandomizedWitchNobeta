@@ -17,7 +17,7 @@ public class ItemPoolGenerator
         FillItemPool(settings, random);
     }
 
-    public List<ItemSystem.ItemType> Retrieve() => _pool.ToList();
+    public List<ItemSystem.ItemType> Retrieve() => [.. _pool];
 
     private void FillItemPool(SeedSettings settings, Random random)
     {

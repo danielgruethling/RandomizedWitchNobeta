@@ -11,20 +11,13 @@ using RandomizedWitchNobeta.Utils.Nobeta;
 
 namespace RandomizedWitchNobeta.Generation;
 
-public class SeedGenerator
+public class SeedGenerator(SeedSettings settings)
 {
-    private readonly SeedSettings _settings;
+    private readonly SeedSettings _settings = settings;
 
     private int _startRegion;
     private Dictionary<RegionExit, int> _exitsOverrides;
-    private readonly List<ItemLocation> _itemLocations;
-
-    public SeedGenerator(SeedSettings settings)
-    {
-        _settings = settings;
-
-        _itemLocations = WorldGraph.ItemLocations;
-    }
+    private readonly List<ItemLocation> _itemLocations = WorldGraph.ItemLocations;
 
     public void Generate()
     {

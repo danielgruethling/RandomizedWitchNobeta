@@ -73,6 +73,7 @@ public class Plugin : BasePlugin
         // Add required Components
         AddComponent<UnityMainThreadDispatcher>();
         Singletons.Timers = AddComponent<Timers>();
+        AddComponent<ApHandler>();
 
         Log.LogMessage($"Plugin {MyPluginInfo.PLUGIN_GUID} successfully loaded!");
     }
