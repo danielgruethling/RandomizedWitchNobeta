@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace RandomizedWitchNobeta.Archipelago;
 
-public class ArchipelagoSessionData : Il2CppSystem.Object
+public class ArchipelagoSessionData : MonoBehaviour
 {
-    public string Uri;
+    public string Hostname;
     public string SlotName;
     public string Password;
+    public string Port;
     public int Index;
 
     public List<long> CheckedLocations;
@@ -24,14 +26,17 @@ public class ArchipelagoSessionData : Il2CppSystem.Object
 
     public ArchipelagoSessionData()
     {
-        Uri = "archipelago.gg";
+        Hostname = "localhost";
         SlotName = "Player1";
+        Port = "38281";
+        Password = string.Empty;
         CheckedLocations = [];
     }
 
-    public ArchipelagoSessionData(string uri, string slotName, string password)
+    public ArchipelagoSessionData(string uri, string port, string slotName, string password)
     {
-        Uri = uri;
+        Hostname = uri;
+        Port = port;
         SlotName = slotName;
         Password = password;
         CheckedLocations = [];

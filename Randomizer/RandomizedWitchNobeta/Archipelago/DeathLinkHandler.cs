@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
+﻿using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using BepInEx;
 using RandomizedWitchNobeta.Utils;
+using System;
+using System.Collections.Generic;
 
 namespace RandomizedWitchNobeta.Archipelago;
 

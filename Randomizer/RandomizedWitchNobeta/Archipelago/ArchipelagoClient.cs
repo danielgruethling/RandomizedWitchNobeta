@@ -1,15 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using Archipelago.MultiClient.Net;
+﻿using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Packets;
+using System;
+using System.Linq;
+using System.Threading;
+using UnityEngine;
 
 namespace RandomizedWitchNobeta.Archipelago;
 
-public class ArchipelagoClient
+public class ArchipelagoClient : MonoBehaviour
 {
     public const string APVersion = "0.5.0";
     private const string Game = "Little Witch Nobeta";
@@ -31,7 +32,7 @@ public class ArchipelagoClient
 
         try
         {
-            session = ArchipelagoSessionFactory.CreateSession(ServerData.Uri);
+            session = ArchipelagoSessionFactory.CreateSession(ServerData.Hostname);
             SetupSession();
         }
         catch (Exception e)
@@ -66,10 +67,10 @@ public class ArchipelagoClient
                     session.TryConnectAndLogin(
                         Game,
                         ServerData.SlotName,
-                        ItemsHandlingFlags.NoItems, // TODO make sure to change this line
+                        ItemsHandlingFlags.AllItems, // TODO make sure to change this line
                         new Version(APVersion),
                         password: ServerData.Password,
-                        requestSlotData: false // ServerData.NeedSlotData
+                        requestSlotData: true // ServerData.NeedSlotData
                     )));
         }
         catch (Exception e)
@@ -100,14 +101,14 @@ public class ArchipelagoClient
 #else
             session.Locations.CompleteLocationChecksAsync(ServerData.CheckedLocations.ToArray());
 #endif
-            outText = $"Successfully connected to {ServerData.Uri} as {ServerData.SlotName}!";
+            outText = $"Successfully connected to {ServerData.Hostname} as {ServerData.SlotName}!";
 
             ArchipelagoConsole.LogMessage(outText);
         }
         else
         {
             var failure = (LoginFailure)result;
-            outText = $"Failed to connect to {ServerData.Uri} as {ServerData.SlotName}.";
+            outText = $"Failed to connect to {ServerData.Hostname} as {ServerData.SlotName}.";
             outText = failure.Errors.Aggregate(outText, (current, error) => current + $"\n    {error}");
 
             Plugin.Log.LogError(outText);
@@ -135,7 +136,7 @@ public class ArchipelagoClient
         Authenticated = false;
     }
 
-    public void SendMessage(string message)
+    public new void SendMessage(string message)
     {
         session.Socket.SendPacketAsync(new SayPacket { Text = message });
     }

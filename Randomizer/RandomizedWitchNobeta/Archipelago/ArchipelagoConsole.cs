@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BepInEx;
+﻿using BepInEx;
 using RandomizedWitchNobeta.Behaviours;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RandomizedWitchNobeta.Archipelago;
@@ -11,14 +11,14 @@ public static class ArchipelagoConsole
 {
     public static bool Hidden = true;
 
-    private static List<string> logLines = new();
+    private static readonly List<string> logLines = [];
     private static Vector2 scrollView;
     private static Rect window;
     private static Rect scroll;
     private static Rect text;
     private static Rect hideShowButton;
 
-    private static GUIStyle textStyle = new();
+    private static readonly GUIStyle textStyle = new();
     private static string scrollText = "";
     private static float lastUpdateTime = Time.time;
     private const int MaxLogLines = 80;
@@ -59,7 +59,7 @@ public static class ArchipelagoConsole
             GUI.EndScrollView();
         }
 
-        if (GUI.Button(hideShowButton, Hidden ? "Show" : "Hide"))
+        if (GUI.Button(hideShowButton, Hidden ? "Show Console" : "Hide Console"))
         {
             Hidden = !Hidden;
             UpdateWindow();
@@ -84,7 +84,7 @@ public static class ArchipelagoConsole
         {
             if (logLines.Count > 0)
             {
-                scrollText = logLines[logLines.Count - 1];
+                scrollText = logLines[^1];
             }
         }
         else
