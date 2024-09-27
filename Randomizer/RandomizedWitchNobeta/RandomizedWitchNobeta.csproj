@@ -142,10 +142,6 @@
         <HintPath>lib\interop\MeshBakerCore.dll</HintPath>
         <Private>False</Private>
       </Reference>
-      <Reference Include="Newtonsoft.Json">
-        <HintPath>lib\interop\Newtonsoft.Json.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
       <Reference Include="Unity.Addressables">
         <HintPath>lib\interop\Unity.Addressables.dll</HintPath>
         <Private>False</Private>

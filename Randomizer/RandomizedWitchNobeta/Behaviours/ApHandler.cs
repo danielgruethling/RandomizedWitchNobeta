@@ -18,7 +18,7 @@ namespace RandomizedWitchNobeta.Behaviours
         private static bool showPort = false;
         private static bool showPassword = false;
         private static string stringToEdit = "";
-        private static Dictionary<string, bool> editingFlags = new Dictionary<string, bool>() {
+        private static readonly Dictionary<string, bool> editingFlags = new() {
             {"Player", false},
             {"Hostname", false},
             {"Port", false},
@@ -40,14 +40,7 @@ namespace RandomizedWitchNobeta.Behaviours
 
             ArchipelagoConsole.OnGUI();
 
-            if (Screen.width <= 1280 && Screen.height <= 800)
-            {
-                guiScale = 0.75f;
-            }
-            else
-            {
-                guiScale = 1f;
-            }
+            guiScale = Screen.width <= 1280 && Screen.height <= 800 ? 0.75f : 1f;
 
             apWindowRect = new Rect(20f, Screen.height * 0.12f, 430f * guiScale, 540f * guiScale);
             GUI.Window(101, apWindowRect, new Action<int>(ArchipelagoConfigEditorWindow), "Archipelago Connection");
@@ -69,20 +62,6 @@ namespace RandomizedWitchNobeta.Behaviours
             {
                 statusMessage = " Status: Disconnected";
                 GUI.Label(new Rect(10f * guiScale, 20f * guiScale, 400f * guiScale, 30f * guiScale), APDisplayInfo + statusMessage);
-
-                /*GUI.TextField(new Rect(150, 70, 150, 20),
-                    ArchipelagoClient.ServerData.Uri);
-                ArchipelagoClient.ServerData.SlotName = GUI.TextField(new Rect(150, 90, 150, 20),
-                    ArchipelagoClient.ServerData.SlotName, 16);
-                ArchipelagoClient.ServerData.Password = GUI.TextField(new Rect(150, 110, 150, 20),
-                    ArchipelagoClient.ServerData.Password);*/
-
-                // requires that the player at least puts *something* in the slot name
-                /*if (GUI.Button(new Rect(16, 130, 100, 20), "Connect") &&
-                    !ArchipelagoClient.ServerData.SlotName.IsNullOrWhiteSpace())
-                {
-                    ArchipelagoClient.Connect();
-                }*/
             }
 
             //Player name
@@ -213,7 +192,7 @@ namespace RandomizedWitchNobeta.Behaviours
                 }
 
                 //update the relevant connection setting field
-                Dictionary<string, bool> originalEditingFlags = new Dictionary<string, bool>(editingFlags);
+                Dictionary<string, bool> originalEditingFlags = new(editingFlags);
                 foreach (KeyValuePair<string, bool> editingFlag in originalEditingFlags)
                 {
                     if (!editingFlag.Value) continue;
@@ -233,17 +212,14 @@ namespace RandomizedWitchNobeta.Behaviours
         }
 
         //Get a connection setting value by fieldname
-        private static string GetConnectionSetting(string fieldName)
+        private static string GetConnectionSetting (string fieldName) => fieldName switch
         {
-            return fieldName switch
-            {
-                "Player" => ArchipelagoClient.ServerData.SlotName,
-                "Hostname" => ArchipelagoClient.ServerData.Hostname,
-                "Port" => ArchipelagoClient.ServerData.Port,
-                "Password" => ArchipelagoClient.ServerData.Password,
-                _ => "",
-            };
-        }
+            "Player" => ArchipelagoClient.ServerData.SlotName,
+            "Hostname" => ArchipelagoClient.ServerData.Hostname,
+            "Port" => ArchipelagoClient.ServerData.Port,
+            "Password" => ArchipelagoClient.ServerData.Password,
+            _ => "",
+        };
 
         //Set a connection setting value by fieldname
         private static void SetConnectionSetting(string fieldName, string value)
@@ -271,7 +247,7 @@ namespace RandomizedWitchNobeta.Behaviours
         private static void ClearAllEditingFlags()
         {
 
-            List<string> fieldKeys = new List<string>(editingFlags.Keys);
+            List<string> fieldKeys = new(editingFlags.Keys);
             foreach (string fieldKey in fieldKeys)
             {
                 editingFlags[fieldKey] = false;
@@ -284,7 +260,7 @@ namespace RandomizedWitchNobeta.Behaviours
             if (editingFlags[fieldName]) return; //can't begin if we're already editing this field
 
             //check and finalize if another field was mid-edit
-            List<string> fieldKeys = new List<string>(editingFlags.Keys);
+            List<string> fieldKeys = new(editingFlags.Keys);
             foreach (string fieldKey in fieldKeys)
             {
                 if (editingFlags[fieldKey]) FinishEditingTextField(fieldKey);
