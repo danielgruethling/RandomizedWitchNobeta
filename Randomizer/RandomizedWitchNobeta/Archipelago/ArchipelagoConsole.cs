@@ -68,12 +68,12 @@ public static class ArchipelagoConsole
         // draw client/server commands entry
         if (Hidden || !ArchipelagoClient.Authenticated) return;
 
-        CommandText = GUI.TextField(CommandTextRect, CommandText);
+        /*CommandText = GUI.TextField(CommandTextRect, CommandText);
         if (!CommandText.IsNullOrWhiteSpace() && GUI.Button(SendCommandButton, "Send"))
         {
             ApHandler.ArchipelagoClient.SendMessage(CommandText);
             CommandText = "";
-        }
+        }*/
     }
 
     public static void UpdateWindow()

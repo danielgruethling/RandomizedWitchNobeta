@@ -3,6 +3,9 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
+using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
+using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Behaviours;
 using RandomizedWitchNobeta.Config;
 using RandomizedWitchNobeta.Features;
@@ -73,7 +76,16 @@ public class Plugin : BasePlugin
         // Add required Components
         AddComponent<UnityMainThreadDispatcher>();
         Singletons.Timers = AddComponent<Timers>();
-        AddComponent<ApHandler>();
+        ClassInjector.RegisterTypeInIl2Cpp<ArchipelagoClient>();
+        ClassInjector.RegisterTypeInIl2Cpp<ArchipelagoSessionData>();
+        ClassInjector.RegisterTypeInIl2Cpp<ApHandler>();
+        UnityEngine.Object.DontDestroyOnLoad(new GameObject("ap settings gui",
+            [
+                Il2CppType.Of<ApHandler>()
+            ])
+        {
+            hideFlags = HideFlags.HideAndDontSave
+        });
 
         Log.LogMessage($"Plugin {MyPluginInfo.PLUGIN_GUID} successfully loaded!");
     }

@@ -32,7 +32,7 @@ public class ArchipelagoClient : MonoBehaviour
 
         try
         {
-            session = ArchipelagoSessionFactory.CreateSession(ServerData.Hostname);
+            session = ArchipelagoSessionFactory.CreateSession(ServerData.Hostname, Convert.ToInt32(ServerData.Port));
             SetupSession();
         }
         catch (Exception e)

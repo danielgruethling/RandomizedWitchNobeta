@@ -1,4 +1,5 @@
 ﻿using RandomizedWitchNobeta.Archipelago;
+using RandomizedWitchNobeta.Utils;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -146,6 +147,80 @@ namespace RandomizedWitchNobeta.Behaviours
 
             bool ClearPassword = GUI.Button(new Rect(190f * guiScale, 440f * guiScale, 75f * guiScale, 30f * guiScale), "Clear");
             if (ClearPassword) HandleClearButton("Password");
+
+            bool DoConnect = GUI.Button(new Rect(190f * guiScale, 480f * guiScale, 150f * guiScale, 30f * guiScale), $"Connect");
+            if (DoConnect) ArchipelagoClient.Connect();
+        }
+
+        private void Update()
+        {
+            // Check if in menu
+            if (Singletons.SceneManager == null)
+            {
+                bool submitKeyPressed = false;
+
+                //handle text input
+                if (Input.anyKeyDown
+                    && !Input.GetKeyDown(KeyCode.Return)
+                    && !Input.GetKeyDown(KeyCode.Escape)
+                    && !Input.GetKeyDown(KeyCode.Tab)
+                    && !Input.GetKeyDown(KeyCode.Backspace)
+                    && !Input.GetKeyDown(KeyCode.Delete)
+                    && !Input.GetKeyDown(KeyCode.LeftArrow)
+                    && !Input.GetKeyDown(KeyCode.RightArrow)
+                    && Input.inputString != ""
+                    )
+                {
+                    bool inputValid = true;
+
+                    //validation for any fields that require it
+                    if (editingFlags["Port"] && !int.TryParse(Input.inputString, out _)) inputValid = false;
+
+                    if (inputValid)
+                    {
+                        stringToEdit = stringToEdit.Insert(stringCursorPosition, Input.inputString);
+                        stringCursorPosition++;
+                    }
+                }
+
+                //handle backspacing
+                if (Input.GetKeyDown(KeyCode.Backspace))
+                {
+                    if (stringToEdit.Length > 0 && stringCursorPosition > 0)
+                    {
+                        stringToEdit = stringToEdit.Remove(stringCursorPosition - 1, 1);
+                        stringCursorPosition--;
+                    }
+                }
+
+                //handle delete
+                if (Input.GetKeyDown(KeyCode.Delete))
+                {
+                    if (stringToEdit.Length > 0 && stringCursorPosition < stringToEdit.Length)
+                    {
+                        stringToEdit = stringToEdit.Remove(stringCursorPosition, 1);
+                    }
+                }
+
+                //handle cursor navigation
+                if (Input.GetKeyDown(KeyCode.LeftArrow) && stringCursorPosition > 0)
+                {
+                    stringCursorPosition--;
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow) && stringCursorPosition < stringToEdit.Length)
+                {
+                    stringCursorPosition++;
+                }
+
+                //update the relevant connection setting field
+                Dictionary<string, bool> originalEditingFlags = new Dictionary<string, bool>(editingFlags);
+                foreach (KeyValuePair<string, bool> editingFlag in originalEditingFlags)
+                {
+                    if (!editingFlag.Value) continue;
+                    SetConnectionSetting(editingFlag.Key, stringToEdit);
+                    if (submitKeyPressed) FinishEditingTextField(editingFlag.Key);
+                }
+            }
         }
 
         //Place a visible cursor in a text label when editing the field
