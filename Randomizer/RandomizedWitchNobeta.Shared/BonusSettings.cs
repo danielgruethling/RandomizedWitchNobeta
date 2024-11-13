@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace RandomizedWitchNobeta.Shared;
+﻿namespace RandomizedWitchNobeta.Shared;
 
 public class BonusSettings
 {

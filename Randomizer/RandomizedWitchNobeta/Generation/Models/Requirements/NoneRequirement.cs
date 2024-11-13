@@ -2,7 +2,7 @@
 
 public class NoneRequirement : ITransitionRequirement
 {
-    public bool CheckRequirement(InventoryState inventoryState)
+    public bool CheckRequirement (InventoryState inventoryState)
     {
         return true;
     }

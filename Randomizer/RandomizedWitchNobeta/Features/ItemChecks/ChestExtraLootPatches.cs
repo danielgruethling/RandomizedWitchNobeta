@@ -8,7 +8,7 @@ public static class ChestExtraLootPatches
 {
     [HarmonyPatch(typeof(TreasureBox), nameof(TreasureBox.SetOpen))]
     [HarmonyPostfix]
-    private static void OpenPostfix(TreasureBox __instance)
+    private static void OpenPostfix (TreasureBox __instance)
     {
         if (__instance.ItemType == ItemSystem.ItemType.Null)
         {

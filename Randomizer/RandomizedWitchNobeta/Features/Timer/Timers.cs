@@ -1,6 +1,6 @@
-﻿using System;
-using RandomizedWitchNobeta.Utils;
+﻿using RandomizedWitchNobeta.Utils;
 using RandomizedWitchNobeta.Utils.Nobeta;
+using System;
 using UnityEngine;
 
 namespace RandomizedWitchNobeta.Features.Timer;
@@ -10,7 +10,7 @@ public class Timers : MonoBehaviour
     private bool _paused = true;
     private bool _ended = false;
 
-    public void Update()
+    public void Update ()
     {
         if (!_ended && !_paused && Singletons.RuntimeVariables is { } runtimeVariables)
         {
@@ -25,22 +25,22 @@ public class Timers : MonoBehaviour
         }
     }
 
-    public void Pause()
+    public void Pause ()
     {
         _paused = true;
     }
 
-    public void Resume()
+    public void Resume ()
     {
         _paused = false;
     }
 
-    public void End()
+    public void End ()
     {
         _ended = true;
     }
 
-    public void Reset()
+    public void Reset ()
     {
         _ended = false;
     }

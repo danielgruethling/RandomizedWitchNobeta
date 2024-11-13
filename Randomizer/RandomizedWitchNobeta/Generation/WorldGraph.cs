@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using RandomizedWitchNobeta.Generation.Models;
+﻿using RandomizedWitchNobeta.Generation.Models;
 using RandomizedWitchNobeta.Generation.Models.Requirements;
+using System.Collections.Generic;
 
 namespace RandomizedWitchNobeta.Generation;
 
@@ -321,7 +321,7 @@ public static class WorldGraph
         }
     };
 
-    private static RegionExit Exit(int sourceScene, int nextSceneNumber, int nextSavePoint)
+    private static RegionExit Exit (int sourceScene, int nextSceneNumber, int nextSavePoint)
     {
         var exit = new RegionExit(sourceScene, nextSceneNumber, nextSavePoint);
 
@@ -330,7 +330,7 @@ public static class WorldGraph
         return exit;
     }
 
-    private static ItemLocation ChestItem(string chestName, int sceneNumber)
+    private static ItemLocation ChestItem (string chestName, int sceneNumber)
     {
         var itemLocation = new ChestItemLocation(chestName, sceneNumber);
 
@@ -339,7 +339,7 @@ public static class WorldGraph
         return itemLocation;
     }
 
-    private static ItemLocation CatItem()
+    private static ItemLocation CatItem ()
     {
         var itemLocation = new CatItemLocation();
 

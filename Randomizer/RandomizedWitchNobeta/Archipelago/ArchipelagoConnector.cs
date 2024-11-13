@@ -17,11 +17,11 @@ namespace RandomizedWitchNobeta.Archipelago
 
         private static List<ItemInfo> PendingItemsHelper { get; } = new();
 
-        public static SeedSettings ConnectAP(string server, string slotName, string password)
+        public static SeedSettings ConnectAP (string server, string slotName, string password)
         {
             SeedSettings settings = null;
 
-            if(Session != null)
+            if (Session != null)
             {
                 PendingItemsHelper.Clear();
                 Session.Items.ItemReceived -= Items_ItemReceived;
@@ -32,7 +32,7 @@ namespace RandomizedWitchNobeta.Archipelago
             Session = ArchipelagoSessionFactory.CreateSession(server);
             Session.Items.ItemReceived += Items_ItemReceived;
             var result = Session.TryConnectAndLogin("Little Witch Nobeta", slotName, ItemsHandlingFlags.AllItems, new("0.4.4"), null, null, password, true);
-            if(result.Successful)
+            if (result.Successful)
             {
                 Plugin.Log.LogMessage($"Connected to AP server.");
 
@@ -47,7 +47,7 @@ namespace RandomizedWitchNobeta.Archipelago
 
                 var loginSuccess = (LoginSuccessful)result;
                 Dictionary<string, object> slotData = loginSuccess.SlotData;
-                foreach(string option_name in slotData.Keys)
+                foreach (string option_name in slotData.Keys)
                 {
                     switch (option_name)
                     {
@@ -59,9 +59,11 @@ namespace RandomizedWitchNobeta.Archipelago
                                 case 1:
                                     settings.MagicMaster = true;
                                     break;
+
                                 case 2:
                                     settings.BossHunt = true;
                                     break;
+
                                 default:
                                     break;
                             }
@@ -69,7 +71,7 @@ namespace RandomizedWitchNobeta.Archipelago
 
                         case "difficulty":
                             settings.Difficulty = (SeedSettings.GameDifficulty)(long)slotData[option_name];
-                                break;
+                            break;
 
                         case "trial_keys":
                             settings.TrialKeys = Convert.ToBoolean(slotData[option_name]);
@@ -96,7 +98,7 @@ namespace RandomizedWitchNobeta.Archipelago
             return settings;
         }
 
-        private static void Items_ItemReceived(ReceivedItemsHelper helper)
+        private static void Items_ItemReceived (ReceivedItemsHelper helper)
         {
             try
             {
@@ -143,7 +145,7 @@ namespace RandomizedWitchNobeta.Archipelago
             }
         }
 
-        public static void HandleItems()
+        public static void HandleItems ()
         {
             try
             {
@@ -180,21 +182,27 @@ namespace RandomizedWitchNobeta.Archipelago
                         case 345600000:
                             Singletons.GameSave.stats.secretMagicLevel += 1;
                             break;
+
                         case 345600001:
                             Singletons.GameSave.stats.iceMagicLevel += 1;
                             break;
+
                         case 345600002:
                             Singletons.GameSave.stats.fireMagicLevel += 1;
                             break;
+
                         case 345600003:
                             Singletons.GameSave.stats.thunderMagicLevel += 1;
                             break;
+
                         case 345600004:
                             Singletons.GameSave.stats.windMagicLevel += 1;
                             break;
+
                         case 345600005:
                             Singletons.GameSave.stats.manaAbsorbLevel += 1;
                             break;
+
                         case 345600006:
                             Singletons.Dispatcher.Enqueue(() =>
                             {
@@ -205,60 +213,78 @@ namespace RandomizedWitchNobeta.Archipelago
                                 Singletons.StageUi.itemBar.UpdateItemSprite(items.g_HoldItem);
                             });
                             break;
+
                         case 345600007:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01");
                             break;
+
                         case 345600010:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Act01_Plus");
                             break;
+
                         case 345600008:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level02");
                             break;
+
                         case 345600009:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level03_Big");
                             break;
+
                         case 345600011:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level04");
                             break;
+
                         case 345600012:
                             Singletons.RuntimeVariables.KilledBosses.Add("Boss_Level05");
                             break;
+
                         case 345600022:
                             Singletons.Dispatcher.Enqueue(() =>
                             {
                                 Game.CreateSoul(SoulSystem.SoulType.Money, Singletons.WizardGirl.transform.position, Singletons.RuntimeVariables.Settings.ChestSoulCount);
                             });
                             break;
+
                         case 345600013:
                             GiveItem(ItemSystem.ItemType.HPCure);
                             break;
+
                         case 345600014:
                             GiveItem(ItemSystem.ItemType.HPCureMiddle);
                             break;
+
                         case 345600015:
                             GiveItem(ItemSystem.ItemType.HPCureBig);
                             break;
+
                         case 345600016:
                             GiveItem(ItemSystem.ItemType.MPCure);
                             break;
+
                         case 345600017:
                             GiveItem(ItemSystem.ItemType.MPCureMiddle);
                             break;
+
                         case 345600018:
                             GiveItem(ItemSystem.ItemType.MPCureBig);
                             break;
+
                         case 345600019:
                             GiveItem(ItemSystem.ItemType.Defense);
                             break;
+
                         case 345600020:
                             GiveItem(ItemSystem.ItemType.DefenseM);
                             break;
+
                         case 345600021:
                             GiveItem(ItemSystem.ItemType.DefenseB);
                             break;
+
                         case 345600024:
                             GiveItem(ItemSystem.ItemType.SPMaxAdd);
                             break;
+
                         default:
                             break;
                     }
@@ -280,7 +306,7 @@ namespace RandomizedWitchNobeta.Archipelago
             }
         }
 
-        private static void GiveItem(ItemSystem.ItemType itemType)
+        private static void GiveItem (ItemSystem.ItemType itemType)
         {
             Singletons.Dispatcher.Enqueue(() =>
             {
@@ -288,7 +314,7 @@ namespace RandomizedWitchNobeta.Archipelago
                 var items = wizardGirl.g_PlayerItem;
 
                 // Find first empty slot if there's any
-                for (int i = 0; i < items.g_iItemSize; i++)
+                for (int i = 0 ; i < items.g_iItemSize ; i++)
                 {
                     if (items.g_HoldItem[i] == ItemSystem.ItemType.Null)
                     {
@@ -300,9 +326,9 @@ namespace RandomizedWitchNobeta.Archipelago
                 }
 
                 // For trial keys replace first slot that is not a Trial Key and create souls for lost item
-                if(itemType == ItemSystem.ItemType.SPMaxAdd)
+                if (itemType == ItemSystem.ItemType.SPMaxAdd)
                 {
-                    for (int i = 0; i < items.g_iItemSize; i++)
+                    for (int i = 0 ; i < items.g_iItemSize ; i++)
                     {
                         if (items.g_HoldItem[i] != ItemSystem.ItemType.SPMaxAdd)
                         {

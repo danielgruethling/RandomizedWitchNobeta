@@ -7,7 +7,7 @@ namespace RandomizedWitchNobeta.Config.Serialization;
 
 public class UnityQuaternionJsonConverter : JsonConverter<Quaternion>
 {
-    public override Quaternion Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Quaternion Read (ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         reader.Read();
 
@@ -31,7 +31,7 @@ public class UnityQuaternionJsonConverter : JsonConverter<Quaternion>
         return new Quaternion(x, y, z, w);
     }
 
-    public override void Write(Utf8JsonWriter writer, Quaternion value, JsonSerializerOptions options)
+    public override void Write (Utf8JsonWriter writer, Quaternion value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
 

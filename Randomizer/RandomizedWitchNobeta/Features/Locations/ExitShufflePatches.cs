@@ -11,7 +11,7 @@ public static class ExitShufflePatches
 
     [HarmonyPatch(typeof(Game), nameof(Game.SwitchScene))]
     [HarmonyPrefix]
-    private static bool SwitchScenePrefix(SceneSwitchData sceneData, float fadeInDuration)
+    private static bool SwitchScenePrefix (SceneSwitchData sceneData, float fadeInDuration)
     {
         if (_switchInProgress)
         {
@@ -57,7 +57,7 @@ public static class ExitShufflePatches
 
     [HarmonyPatch(typeof(Game), nameof(Game.SwitchScene))]
     [HarmonyPostfix]
-    private static void SwitchScenePost(SceneSwitchData sceneData, float fadeInDuration)
+    private static void SwitchScenePost (SceneSwitchData sceneData, float fadeInDuration)
     {
         _switchInProgress = false;
     }
@@ -65,7 +65,7 @@ public static class ExitShufflePatches
     // Fix text display on doors
     [HarmonyPatch(typeof(StageUIManager), nameof(StageUIManager.AppearExitLevelMsgBox))]
     [HarmonyPostfix]
-    private static void AppearExitLevelPostfix(StageUIManager __instance, SavePoint savePointData)
+    private static void AppearExitLevelPostfix (StageUIManager __instance, SavePoint savePointData)
     {
         // Display override destination if it exists
         if (Singletons.RuntimeVariables is not { } runtimeVariables)

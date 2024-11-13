@@ -1,13 +1,10 @@
-using System.Net;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using MessagePack;
 using MessagePack.Resolvers;
-using Microsoft.AspNetCore.Mvc;
 using RandomizedWitchNobeta.Shared;
 using RandomizedWitchNobeta.WebSettings;
 using RandomizedWitchNobeta.WebSettings.Utils;
-using TextCopy;
+using System.Net;
+using System.Text.Json.Nodes;
 
 // ReSharper disable AccessToDisposedClosure
 

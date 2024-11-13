@@ -4,6 +4,6 @@ namespace RandomizedWitchNobeta.Generation.Models;
 
 public class RegionTransition
 {
-    public required Region Destination { get; init; }
-    public required ITransitionRequirement Requirement { get; init; }
+    public Region Destination { get; init; }
+    public ITransitionRequirement Requirement { get; init; }
 }

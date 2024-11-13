@@ -2,5 +2,5 @@
 
 public interface ITransitionRequirement
 {
-    public bool CheckRequirement(InventoryState inventoryState);
+    public bool CheckRequirement (InventoryState inventoryState);
 }

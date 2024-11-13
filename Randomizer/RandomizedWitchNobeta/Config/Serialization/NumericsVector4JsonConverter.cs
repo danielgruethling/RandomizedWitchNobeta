@@ -7,7 +7,7 @@ namespace RandomizedWitchNobeta.Config.Serialization;
 
 public class NumericsVector4JsonConverter : JsonConverter<Vector4>
 {
-    public override Vector4 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Vector4 Read (ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         reader.Read();
 
@@ -31,7 +31,7 @@ public class NumericsVector4JsonConverter : JsonConverter<Vector4>
         return new Vector4(x, y, z, w);
     }
 
-    public override void Write(Utf8JsonWriter writer, Vector4 value, JsonSerializerOptions options)
+    public override void Write (Utf8JsonWriter writer, Vector4 value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
 

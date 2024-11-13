@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using Archipelago.MultiClient.Net.Enums;
+﻿using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Packets;
 using HarmonyLib;
 using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Utils;
 using RandomizedWitchNobeta.Utils.Nobeta;
+using System;
+using System.IO;
 
 namespace RandomizedWitchNobeta.Features.UI;
 
@@ -17,7 +17,7 @@ public static class RunCompletePatches
 
     [HarmonyPatch(typeof(NPCManage), nameof(NPCManage.Hit))]
     [HarmonyPostfix]
-    private static void NpcHitPostfix(NPCManage __instance)
+    private static void NpcHitPostfix (NPCManage __instance)
     {
         if (Singletons.RuntimeVariables is not { } runtimeVariables)
         {
@@ -30,7 +30,7 @@ public static class RunCompletePatches
         {
             Plugin.Log.LogDebug("Timer ended!");
             Singletons.Timers.End();
-            if(runtimeVariables.Settings.Archipelago)
+            if (runtimeVariables.Settings.Archipelago)
             {
                 var statusUpdatePacket = new StatusUpdatePacket();
                 statusUpdatePacket.Status = ArchipelagoClientState.ClientGoal;
@@ -41,7 +41,7 @@ public static class RunCompletePatches
 
     [HarmonyPatch(typeof(StaffManager), nameof(StaffManager.ShowBeatingMessageBox))]
     [HarmonyPostfix]
-    private static void ShowBeatingMessageBoxPostfix(StaffManager __instance)
+    private static void ShowBeatingMessageBoxPostfix (StaffManager __instance)
     {
         Plugin.Log.LogMessage("Run completed!");
         if (Singletons.RuntimeVariables is { } runtimeVariables)
@@ -67,7 +67,7 @@ public static class RunCompletePatches
         }
     }
 
-    private static void ArchiveRun(int seedHash, string gameVersion, string randomizerVersion)
+    private static void ArchiveRun (int seedHash, string gameVersion, string randomizerVersion)
     {
         string runName = $"{DateTime.Now.ToString("s").Replace(':', '.')} - {seedHash:X8} - {gameVersion[^5..]} - {randomizerVersion[^5..]}";
 

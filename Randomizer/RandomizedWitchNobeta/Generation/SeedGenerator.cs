@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using LibCpp2IL;
+﻿using LibCpp2IL;
 using RandomizedWitchNobeta.Features;
 using RandomizedWitchNobeta.Generation.Models;
 using RandomizedWitchNobeta.Shared;
 using RandomizedWitchNobeta.Utils;
 using RandomizedWitchNobeta.Utils.Nobeta;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace RandomizedWitchNobeta.Generation;
 
-public class SeedGenerator(SeedSettings settings)
+public class SeedGenerator (SeedSettings settings)
 {
     private readonly SeedSettings _settings = settings;
 
@@ -19,7 +19,7 @@ public class SeedGenerator(SeedSettings settings)
     private Dictionary<RegionExit, int> _exitsOverrides;
     private readonly List<ItemLocation> _itemLocations = WorldGraph.ItemLocations;
 
-    public void Generate()
+    public void Generate ()
     {
         var random = new Random(_settings.Seed);
 
@@ -46,7 +46,7 @@ public class SeedGenerator(SeedSettings settings)
         Singletons.RuntimeVariables = new RuntimeVariables(_settings, _startRegion, _exitsOverrides, _itemLocations);
     }
 
-    private void GenerateExits(Random random)
+    private void GenerateExits (Random random)
     {
         // Generate exits overrides, make it so a region never loop on itself
         _exitsOverrides = new Dictionary<RegionExit, int>();
@@ -79,7 +79,7 @@ public class SeedGenerator(SeedSettings settings)
             : (int)_settings.StartLevel + 1;
     }
 
-    private void RandomFillItems(Random random, ItemPoolGenerator itemPoolGenerator)
+    private void RandomFillItems (Random random, ItemPoolGenerator itemPoolGenerator)
     {
         // Randomize item locations content
         var availableItems = itemPoolGenerator.Retrieve();
@@ -92,7 +92,7 @@ public class SeedGenerator(SeedSettings settings)
         }
     }
 
-    private bool CheckCompletable()
+    private bool CheckCompletable ()
     {
         // If trial keys are enabled, check that no key is located inside a trial
         if (_settings.TrialKeys)
@@ -145,15 +145,19 @@ public class SeedGenerator(SeedSettings settings)
                         case ItemSystem.ItemType.MagicNull:
                             inventory.ArcaneLevel++;
                             break;
+
                         case ItemSystem.ItemType.MagicIce:
                             inventory.IceLevel++;
                             break;
+
                         case ItemSystem.ItemType.MagicFire:
                             inventory.FireLevel++;
                             break;
+
                         case ItemSystem.ItemType.MagicLightning:
                             inventory.ThunderLevel++;
                             break;
+
                         case ItemSystem.ItemType.SPMaxAdd: // Token
                             inventory.TokenAmount++;
                             break;
@@ -232,21 +236,21 @@ public class SeedGenerator(SeedSettings settings)
                 endConditionsValidated &= _settings.MagicUpgrade switch
                 {
                     SeedSettings.MagicUpgradeMode.Vanilla => inventory is
-                        {
-                            ArcaneLevel: >= 5,
-                            IceLevel: >= 5,
-                            FireLevel: >= 5,
-                            ThunderLevel: >= 5
-                        },
+                    {
+                        ArcaneLevel: >= 5,
+                        IceLevel: >= 5,
+                        FireLevel: >= 5,
+                        ThunderLevel: >= 5
+                    },
 
                     SeedSettings.MagicUpgradeMode.BossKill => inventory is
-                        {
-                            ArcaneLevel: >= 1,
-                            IceLevel: >= 1,
-                            FireLevel: >= 1,
-                            ThunderLevel: >= 1,
-                            BossKilled: >= 4
-                        },
+                    {
+                        ArcaneLevel: >= 1,
+                        IceLevel: >= 1,
+                        FireLevel: >= 1,
+                        ThunderLevel: >= 1,
+                        BossKilled: >= 4
+                    },
 
                     _ => throw new ArgumentOutOfRangeException($"Invalid magic upgrade setting: {_settings.MagicUpgrade}")
                 };

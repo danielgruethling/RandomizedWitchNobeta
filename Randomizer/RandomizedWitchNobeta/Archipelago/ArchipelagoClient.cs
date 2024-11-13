@@ -19,14 +19,14 @@ public class ArchipelagoClient : MonoBehaviour
     private bool attemptingConnection;
 
     public static ArchipelagoSessionData ServerData = new();
-    private DeathLinkHandler DeathLinkHandler;
+    public DeathLinkHandler DeathLinkHandler;
     private ArchipelagoSession session;
 
     /// <summary>
     /// call to connect to an Archipelago session. Connection info should already be set up on ServerData
     /// </summary>
     /// <returns></returns>
-    public void Connect()
+    public void Connect ()
     {
         if (Authenticated || attemptingConnection) return;
 
@@ -46,7 +46,7 @@ public class ArchipelagoClient : MonoBehaviour
     /// <summary>
     /// add handlers for Archipelago events
     /// </summary>
-    private void SetupSession()
+    private void SetupSession ()
     {
         session.MessageLog.OnMessageReceived += message => ArchipelagoConsole.LogMessage(message.ToString());
         session.Items.ItemReceived += OnItemReceived;
@@ -57,7 +57,7 @@ public class ArchipelagoClient : MonoBehaviour
     /// <summary>
     /// attempt to connect to the server with our connection info
     /// </summary>
-    private void TryConnect()
+    private void TryConnect ()
     {
         try
         {
@@ -85,7 +85,7 @@ public class ArchipelagoClient : MonoBehaviour
     /// handle the connection result and do things
     /// </summary>
     /// <param name="result"></param>
-    private void HandleConnectResult(LoginResult result)
+    private void HandleConnectResult (LoginResult result)
     {
         string outText;
         if (result.Successful)
@@ -99,7 +99,7 @@ public class ArchipelagoClient : MonoBehaviour
 #if NET35
             session.Locations.CompleteLocationChecksAsync(null, ServerData.CheckedLocations.ToArray());
 #else
-            session.Locations.CompleteLocationChecksAsync(ServerData.CheckedLocations.ToArray());
+            session.Locations.CompleteLocationChecksAsync([.. ServerData.CheckedLocations]);
 #endif
             outText = $"Successfully connected to {ServerData.Hostname} as {ServerData.SlotName}!";
 
@@ -124,7 +124,7 @@ public class ArchipelagoClient : MonoBehaviour
     /// <summary>
     /// something we wrong or we need to properly disconnect from the server. cleanup and re null our session
     /// </summary>
-    private void Disconnect()
+    private void Disconnect ()
     {
         Plugin.Log.LogDebug("disconnecting from server...");
 #if NET35
@@ -136,16 +136,13 @@ public class ArchipelagoClient : MonoBehaviour
         Authenticated = false;
     }
 
-    public new void SendMessage(string message)
-    {
-        session.Socket.SendPacketAsync(new SayPacket { Text = message });
-    }
+    public new void SendMessage (string message) => session.Socket.SendPacketAsync(new SayPacket { Text = message });
 
     /// <summary>
     /// we received an item so reward it here
     /// </summary>
     /// <param name="helper">item helper which we can grab our item from</param>
-    private void OnItemReceived(ReceivedItemsHelper helper)
+    private void OnItemReceived (ReceivedItemsHelper helper)
     {
         var receivedItem = helper.DequeueItem();
 
@@ -163,7 +160,7 @@ public class ArchipelagoClient : MonoBehaviour
     /// </summary>
     /// <param name="e">thrown exception from our socket</param>
     /// <param name="message">message received from the server</param>
-    private void OnSessionErrorReceived(Exception e, string message)
+    private void OnSessionErrorReceived (Exception e, string message)
     {
         Plugin.Log.LogError(e);
         ArchipelagoConsole.LogMessage(message);
@@ -173,7 +170,7 @@ public class ArchipelagoClient : MonoBehaviour
     /// something went wrong closing our connection. disconnect and clean up
     /// </summary>
     /// <param name="reason"></param>
-    private void OnSessionSocketClosed(string reason)
+    private void OnSessionSocketClosed (string reason)
     {
         Plugin.Log.LogError($"Connection to Archipelago lost: {reason}");
         Disconnect();

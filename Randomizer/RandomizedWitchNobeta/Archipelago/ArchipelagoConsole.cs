@@ -27,12 +27,12 @@ public static class ArchipelagoConsole
     private static Rect CommandTextRect;
     private static Rect SendCommandButton;
 
-    public static void Awake()
+    public static void Awake ()
     {
         UpdateWindow();
     }
 
-    public static void LogMessage(string message)
+    public static void LogMessage (string message)
     {
         if (message.IsNullOrWhiteSpace()) return;
 
@@ -46,7 +46,7 @@ public static class ArchipelagoConsole
         UpdateWindow();
     }
 
-    public static void OnGUI()
+    public static void OnGUI ()
     {
         if (logLines.Count == 0) return;
 
@@ -63,7 +63,7 @@ public static class ArchipelagoConsole
             Hidden = !Hidden;
             UpdateWindow();
         }
-        
+
         // draw client/server commands entry
         if (Hidden || !ArchipelagoClient.Authenticated) return;
 
@@ -75,7 +75,7 @@ public static class ArchipelagoConsole
         }*/
     }
 
-    public static void UpdateWindow()
+    public static void UpdateWindow ()
     {
         scrollText = "";
 
@@ -88,7 +88,7 @@ public static class ArchipelagoConsole
         }
         else
         {
-            for (var i = 0; i < logLines.Count; i++)
+            for (var i = 0 ; i < logLines.Count ; i++)
             {
                 scrollText += "> ";
                 scrollText += logLines.ElementAt(i);

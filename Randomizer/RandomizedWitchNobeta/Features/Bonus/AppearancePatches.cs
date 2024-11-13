@@ -1,7 +1,7 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RandomizedWitchNobeta.Shared;
 using RandomizedWitchNobeta.Utils;
+using System;
 using Random = System.Random;
 
 namespace RandomizedWitchNobeta.Features.Bonus;
@@ -17,7 +17,7 @@ public static class AppearancePatches
 
     public static BonusSettings.RandomSkin RandomizeSkin;
 
-    private static void UpdateSelectedSkin()
+    private static void UpdateSelectedSkin ()
     {
         var gameSkin = SelectedSkin;
 
@@ -30,7 +30,7 @@ public static class AppearancePatches
     }
 
     // Skin loader, hide bag, staff and hat
-    public static void InitAppearance()
+    public static void InitAppearance ()
     {
         if (Singletons.NobetaSkin is not { } skin)
         {
@@ -75,11 +75,11 @@ public static class AppearancePatches
 
     [HarmonyPatch(typeof(Game), nameof(Game.SwitchScene))]
     [HarmonyPrefix]
-    private static void SwitchScenePrefix()
+    private static void SwitchScenePrefix ()
     {
         if (RandomizeSkin == BonusSettings.RandomSkin.Always)
         {
-            SelectedSkin = (GameSkin) Random.Shared.Next(0, AvailableSkins.Length);
+            SelectedSkin = (GameSkin)Random.Shared.Next(0, AvailableSkins.Length);
         }
 
         UpdateSelectedSkin();
@@ -87,7 +87,7 @@ public static class AppearancePatches
 
     [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.Update))]
     [HarmonyPostfix]
-    private static void PlayerControllerUpdatePostfix()
+    private static void PlayerControllerUpdatePostfix ()
     {
         InitAppearance();
     }

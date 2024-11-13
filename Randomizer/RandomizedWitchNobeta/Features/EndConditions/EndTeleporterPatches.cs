@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RandomizedWitchNobeta.Generation;
 using RandomizedWitchNobeta.Utils;
 using RandomizedWitchNobeta.Utils.Nobeta;
+using System.Linq;
 using UnityEngine;
 
 namespace RandomizedWitchNobeta.Features.EndConditions;
@@ -15,7 +15,7 @@ public static class EndTeleporterPatches
 
     [HarmonyPatch(typeof(PlayerInputController), nameof(PlayerInputController.Interact))]
     [HarmonyPrefix]
-    private static bool InputInteractPrefix(PlayerInputController __instance)
+    private static bool InputInteractPrefix (PlayerInputController __instance)
     {
         // Only check in last stage
         if (Game.sceneManager is not { stageId: 7 } || Singletons.RuntimeVariables is not { } runtimeVariables)
@@ -39,12 +39,12 @@ public static class EndTeleporterPatches
                 {
                     var stats = Game.GameSave.stats;
                     if (stats is not
-                    {
-                        secretMagicLevel: >= 5,
-                        iceMagicLevel: >= 5,
-                        fireMagicLevel: >= 5,
-                        thunderMagicLevel: >= 5
-                    })
+                        {
+                            secretMagicLevel: >= 5,
+                            iceMagicLevel: >= 5,
+                            fireMagicLevel: >= 5,
+                            thunderMagicLevel: >= 5
+                        })
                     {
                         Game.AppearEventPrompt("Only the Magic Master may pass.");
 
@@ -78,7 +78,7 @@ public static class EndTeleporterPatches
 
     [HarmonyPatch(typeof(SceneManager), nameof(SceneManager.OnSceneInitComplete))]
     [HarmonyPostfix]
-    private static void OnSceneInitCompletePostfix()
+    private static void OnSceneInitCompletePostfix ()
     {
         // Only check in last stage
         if (Game.sceneManager is not { stageId: 7 } || Singletons.RuntimeVariables is null)

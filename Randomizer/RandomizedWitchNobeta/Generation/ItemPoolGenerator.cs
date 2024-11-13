@@ -1,7 +1,7 @@
-﻿using System;
+﻿using RandomizedWitchNobeta.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using RandomizedWitchNobeta.Shared;
 using Weighted_Randomizer;
 
 namespace RandomizedWitchNobeta.Generation;
@@ -12,14 +12,14 @@ public class ItemPoolGenerator
 
     private readonly List<ItemSystem.ItemType> _pool = new(ItemPoolSize);
 
-    public ItemPoolGenerator(SeedSettings settings, Random random)
+    public ItemPoolGenerator (SeedSettings settings, Random random)
     {
         FillItemPool(settings, random);
     }
 
-    public List<ItemSystem.ItemType> Retrieve() => [.. _pool];
+    public List<ItemSystem.ItemType> Retrieve () => [.. _pool];
 
-    private void FillItemPool(SeedSettings settings, Random random)
+    private void FillItemPool (SeedSettings settings, Random random)
     {
         // Magic books
         _pool.Add(ItemSystem.ItemType.MagicIce);
@@ -75,7 +75,7 @@ public class ItemPoolGenerator
 
         while (_pool.Count < ItemPoolSize)
         {
-            _pool.Add((ItemSystem.ItemType) filler.NextWithReplacement());
+            _pool.Add((ItemSystem.ItemType)filler.NextWithReplacement());
         }
 
         // Check size

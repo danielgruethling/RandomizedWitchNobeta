@@ -19,7 +19,7 @@ public sealed class SettingsService
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private FileSystemWatcher _watcher;
 
-    public async Task Run()
+    public async Task Run ()
     {
         var cancellationToken = _cancellationTokenSource.Token;
 
@@ -63,7 +63,7 @@ public sealed class SettingsService
         */
     }
 
-    public static void ReloadBonusSettings(BonusSettings bonusSettings = null)
+    public static void ReloadBonusSettings (BonusSettings bonusSettings = null)
     {
         if (bonusSettings is null)
         {
@@ -81,14 +81,14 @@ public sealed class SettingsService
             }
         }
 
-        AppearancePatches.SelectedSkin = (GameSkin) bonusSettings.SelectedSkin;
+        AppearancePatches.SelectedSkin = (GameSkin)bonusSettings.SelectedSkin;
         AppearancePatches.RandomizeSkin = bonusSettings.RandomizeSkin;
         AppearancePatches.HideBagEnabled = bonusSettings.HideBag;
         AppearancePatches.HideStaffEnabled = bonusSettings.HideStaff;
         AppearancePatches.HideHatEnabled = bonusSettings.HideHat;
     }
 
-    private async void WatcherOnChanged(object sender, FileSystemEventArgs e)
+    private async void WatcherOnChanged (object sender, FileSystemEventArgs e)
     {
         // Ignore changes to other files
         if (e.ChangeType is not (WatcherChangeTypes.Created or WatcherChangeTypes.Changed)
@@ -139,7 +139,7 @@ public sealed class SettingsService
         }
     }
 
-    public void Stop()
+    public void Stop ()
     {
         _cancellationTokenSource.Cancel();
     }

@@ -76,25 +76,28 @@ public static class NobetaProcessUtils
         ///         And the 11's try to coerce a window to minimized or maximized.
         /// </summary>
         SW_SHOWDEFAULT = 10,
+
         SW_FORCEMINIMIZE = 11,
         SW_MAX = 11
     }
 
     [DllImport("user32.dll")]
-    internal static extern IntPtr SetForegroundWindow(IntPtr hWnd);
+    internal static extern IntPtr SetForegroundWindow (IntPtr hWnd);
 
     [DllImport("user32.dll")]
-    internal static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    internal static extern bool ShowWindow (IntPtr hWnd, int nCmdShow);
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    public static extern IntPtr FindWindow (string lpClassName, string lpWindowName);
 
     #region Window styles
+
     [Flags]
     public enum ExtendedWindowStyles
     {
         // ...
         WS_EX_TOOLWINDOW = 0x00000080,
+
         // ...
     }
 
@@ -102,13 +105,14 @@ public static class NobetaProcessUtils
     {
         // ...
         GWL_EXSTYLE = (-20),
+
         // ...
     }
 
     [DllImport("user32.dll")]
-    public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+    public static extern IntPtr GetWindowLong (IntPtr hWnd, int nIndex);
 
-    public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+    public static IntPtr SetWindowLong (IntPtr hWnd, int nIndex, IntPtr dwNewLong)
     {
         int error = 0;
         IntPtr result = IntPtr.Zero;
@@ -138,25 +142,26 @@ public static class NobetaProcessUtils
     }
 
     [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", SetLastError = true)]
-    private static extern IntPtr IntSetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+    private static extern IntPtr IntSetWindowLongPtr (IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
     [DllImport("user32.dll", EntryPoint = "SetWindowLong", SetLastError = true)]
-    private static extern Int32 IntSetWindowLong(IntPtr hWnd, int nIndex, Int32 dwNewLong);
+    private static extern Int32 IntSetWindowLong (IntPtr hWnd, int nIndex, Int32 dwNewLong);
 
-    private static int IntPtrToInt32(IntPtr intPtr)
+    private static int IntPtrToInt32 (IntPtr intPtr)
     {
         return unchecked((int)intPtr.ToInt64());
     }
 
     [DllImport("kernel32.dll", EntryPoint = "SetLastError")]
-    public static extern void SetLastError(int dwErrorCode);
-    #endregion
+    public static extern void SetLastError (int dwErrorCode);
+
+    #endregion Window styles
 
     public static Process NobetaProcess { get; set; }
     public static IntPtr GameWindowHandle { get; set; }
     public static IntPtr OverlayWindowHandle { get; set; }
 
-    public static void HideOverlayFromTaskbar()
+    public static void HideOverlayFromTaskbar ()
     {
         int exStyle = (int)GetWindowLong(OverlayWindowHandle, (int)GetWindowLongFields.GWL_EXSTYLE);
 
@@ -164,9 +169,9 @@ public static class NobetaProcessUtils
         SetWindowLong(OverlayWindowHandle, (int)GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
     }
 
-    public static void FocusNobetaWindow()
+    public static void FocusNobetaWindow ()
     {
         SetForegroundWindow(GameWindowHandle);
-        ShowWindow(GameWindowHandle, (int) ShowWindowCommands.SW_SHOW);
+        ShowWindow(GameWindowHandle, (int)ShowWindowCommands.SW_SHOW);
     }
 }

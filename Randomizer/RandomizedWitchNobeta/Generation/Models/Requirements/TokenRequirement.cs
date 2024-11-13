@@ -4,12 +4,12 @@ public class TokenRequirement : ITransitionRequirement
 {
     public int AmountNeeded { get; }
 
-    public TokenRequirement(int amountNeeded)
+    public TokenRequirement (int amountNeeded)
     {
         AmountNeeded = amountNeeded;
     }
 
-    public bool CheckRequirement(InventoryState inventoryState)
+    public bool CheckRequirement (InventoryState inventoryState)
     {
         return !inventoryState.SeedSettings.TrialKeys || inventoryState.TokenAmount >= AmountNeeded;
     }

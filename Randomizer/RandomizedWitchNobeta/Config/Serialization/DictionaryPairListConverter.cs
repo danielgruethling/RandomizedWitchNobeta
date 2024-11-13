@@ -30,7 +30,7 @@ public class DictionaryPairListConverter : JsonConverterFactory
         typeof(ulong)
     ];
 
-    public override bool CanConvert(Type typeToConvert)
+    public override bool CanConvert (Type typeToConvert)
     {
         if (!typeToConvert.IsGenericType)
         {
@@ -54,7 +54,7 @@ public class DictionaryPairListConverter : JsonConverterFactory
         return true;
     }
 
-    public override JsonConverter CreateConverter(
+    public override JsonConverter CreateConverter (
         Type type,
         JsonSerializerOptions options)
     {
@@ -62,7 +62,7 @@ public class DictionaryPairListConverter : JsonConverterFactory
         Type keyType = typeArguments[0];
         Type valueType = typeArguments[1];
 
-        JsonConverter converter = (JsonConverter) Activator.CreateInstance(
+        JsonConverter converter = (JsonConverter)Activator.CreateInstance(
             typeof(DictionaryPairListConverterInner<,>).MakeGenericType(keyType, valueType),
             BindingFlags.Instance | BindingFlags.Public,
             binder: null,
@@ -79,16 +79,16 @@ public class DictionaryPairListConverter : JsonConverterFactory
         private readonly JsonConverter<List<KeyValuePair<TKey, TValue>>> _pairListConverter;
         private readonly Type _pairListType;
 
-        public DictionaryPairListConverterInner(JsonSerializerOptions options)
+        public DictionaryPairListConverterInner (JsonSerializerOptions options)
         {
             _pairListType = typeof(List<KeyValuePair<TKey, TValue>>);
 
             // For performance, use the existing converter.
-            _pairListConverter = (JsonConverter<List<KeyValuePair<TKey, TValue>>>) options
+            _pairListConverter = (JsonConverter<List<KeyValuePair<TKey, TValue>>>)options
                 .GetConverter(_pairListType);
         }
 
-        public override Dictionary<TKey, TValue> Read(
+        public override Dictionary<TKey, TValue> Read (
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
@@ -105,7 +105,7 @@ public class DictionaryPairListConverter : JsonConverterFactory
             return dictionary;
         }
 
-        public override void Write(
+        public override void Write (
             Utf8JsonWriter writer,
             Dictionary<TKey, TValue> dictionary,
             JsonSerializerOptions options)

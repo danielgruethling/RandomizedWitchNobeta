@@ -36,13 +36,13 @@ public class Plugin : BasePlugin
 
     private static AutoConfigManager AutoConfigManager;
 
-    public override void Load()
+    public override void Load ()
     {
         Log = base.Log;
         Log.LogMessage($"Plugin {MyPluginInfo.PLUGIN_GUID} is loading...");
 
         // Fix ImGUI task preventing the game from closing
-        Application.quitting += (Action) (() =>
+        Application.quitting += (Action)(() =>
         {
             Singletons.SettingsService.Stop();
             Unload();
@@ -50,6 +50,7 @@ public class Plugin : BasePlugin
 
         // Plugin startup logic
         ConfigDirectory = new DirectoryInfo(Path.Combine(Path.GetDirectoryName(Config.ConfigFilePath)!, "RandomizedWitchNobeta"));
+        Log.LogMessage($"Plugin ConfigDirectory: {ConfigDirectory.FullName}");
         ConfigDirectory.Create();
 
         PluginInstallationDirectory = new DirectoryInfo(Path.Combine(ConfigDirectory.FullName, "../../plugins/RandomizedWitchNobeta"));
@@ -90,7 +91,7 @@ public class Plugin : BasePlugin
         Log.LogMessage($"Plugin {MyPluginInfo.PLUGIN_GUID} successfully loaded!");
     }
 
-    public override bool Unload()
+    public override bool Unload ()
     {
         Log.LogMessage($"Plugin {MyPluginInfo.PLUGIN_GUID} unloading...");
 
@@ -101,7 +102,7 @@ public class Plugin : BasePlugin
         return false;
     }
 
-    public static void SaveConfigs()
+    public static void SaveConfigs ()
     {
         Log.LogInfo("Saving configs...");
 
@@ -115,7 +116,7 @@ public class Plugin : BasePlugin
         Log.LogInfo("Configs saved");
     }
 
-    public static void ApplyPatches()
+    public static void ApplyPatches ()
     {
         _harmony = new Harmony(nameof(RandomizedWitchNobeta));
 

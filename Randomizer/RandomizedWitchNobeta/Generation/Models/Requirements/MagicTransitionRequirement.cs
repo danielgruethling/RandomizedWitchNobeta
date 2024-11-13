@@ -1,17 +1,17 @@
 ﻿namespace RandomizedWitchNobeta.Generation.Models.Requirements;
+
 public class MagicRequirement : ITransitionRequirement
 {
-
     public MagicType Type { get; }
     public int Level { get; }
 
-    public MagicRequirement(MagicType type, int level)
+    public MagicRequirement (MagicType type, int level)
     {
         Type = type;
         Level = level;
     }
 
-    public bool CheckRequirement(InventoryState inventoryState)
+    public bool CheckRequirement (InventoryState inventoryState)
     {
         return Type switch
         {

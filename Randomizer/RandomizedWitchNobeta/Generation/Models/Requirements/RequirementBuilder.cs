@@ -14,13 +14,13 @@ public class RequirementBuilder
     private readonly List<ITransitionRequirement> _requirements;
     private readonly CombineMethod _combineMethod;
 
-    public RequirementBuilder(CombineMethod combineMethod = CombineMethod.OneOf)
+    public RequirementBuilder (CombineMethod combineMethod = CombineMethod.OneOf)
     {
         _combineMethod = combineMethod;
         _requirements = new List<ITransitionRequirement>();
     }
 
-    public ITransitionRequirement Build()
+    public ITransitionRequirement Build ()
     {
         if (_requirements.Count == 0)
         {
@@ -40,21 +40,21 @@ public class RequirementBuilder
         };
     }
 
-    public RequirementBuilder Magic(MagicType type, int level)
+    public RequirementBuilder Magic (MagicType type, int level)
     {
         _requirements.Add(new MagicRequirement(type, level));
 
         return this;
     }
 
-    public RequirementBuilder Token(int amount)
+    public RequirementBuilder Token (int amount)
     {
         _requirements.Add(new TokenRequirement(amount));
 
         return this;
     }
 
-    public RequirementBuilder All(Action<RequirementBuilder> action)
+    public RequirementBuilder All (Action<RequirementBuilder> action)
     {
         var builder = new RequirementBuilder(CombineMethod.All);
 
@@ -65,7 +65,7 @@ public class RequirementBuilder
         return this;
     }
 
-    public RequirementBuilder OneOf(Action<RequirementBuilder> action)
+    public RequirementBuilder OneOf (Action<RequirementBuilder> action)
     {
         var builder = new RequirementBuilder(CombineMethod.OneOf);
 

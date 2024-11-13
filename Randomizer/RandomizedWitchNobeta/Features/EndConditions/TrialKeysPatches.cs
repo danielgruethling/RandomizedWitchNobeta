@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RandomizedWitchNobeta.Utils;
 using RandomizedWitchNobeta.Utils.Extensions;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RandomizedWitchNobeta.Features.EndConditions;
@@ -15,7 +15,7 @@ public static class TrialKeysPatches
     // Disable auto-open of trials
     [HarmonyPatch(typeof(MultipleEventOpen), nameof(MultipleEventOpen.InitData))]
     [HarmonyPostfix]
-    private static void MultipleEventOpenInitPostfix(MultipleEventOpen __instance)
+    private static void MultipleEventOpenInitPostfix (MultipleEventOpen __instance)
     {
         // Only check in last stage
         if (Game.sceneManager.stageId != 7 || Singletons.RuntimeVariables is not { } runtimeVariables)
@@ -51,7 +51,7 @@ public static class TrialKeysPatches
 
     [HarmonyPatch(typeof(Game), nameof(Game.EnterLoaderScene))]
     [HarmonyPrefix]
-    private static void EnterLoaderScenePostfix()
+    private static void EnterLoaderScenePostfix ()
     {
         _openers.Clear();
     }
@@ -59,7 +59,7 @@ public static class TrialKeysPatches
     // Open trial on token drop
     [HarmonyPatch(typeof(PlayerItem), nameof(PlayerItem.DiscardItemSuccess))]
     [HarmonyPostfix]
-    private static void DiscardItemPostfix(IItemController __instance)
+    private static void DiscardItemPostfix (IItemController __instance)
     {
         if (Game.sceneManager.stageId != 7 || Singletons.RuntimeVariables is not { } runtimeVariables)
         {
@@ -98,7 +98,7 @@ public static class TrialKeysPatches
     // Display a help message when near a trial
     [HarmonyPatch(typeof(WizardGirlManage), nameof(WizardGirlManage.Update))]
     [HarmonyPostfix]
-    private static void HelpMessageUpdatePostfix(WizardGirlManage __instance)
+    private static void HelpMessageUpdatePostfix (WizardGirlManage __instance)
     {
         // Skip if trial keys are not enabled
         if (Game.sceneManager.stageId != 7 || Singletons.RuntimeVariables is not { Settings.TrialKeys: true } runtimeVariables)
@@ -124,19 +124,19 @@ public static class TrialKeysPatches
     // Disable usage of tokens (can only drop)
     [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.OnUseItemHotKeyDown))]
     [HarmonyPrefix]
-    private static bool UseItemPrefix(PlayerController __instance, int index)
+    private static bool UseItemPrefix (PlayerController __instance, int index)
     {
         return CheckUseItem(__instance.g_Item.GetSelectItemType(index));
     }
 
     [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.OnUseItemKeyDown))]
     [HarmonyPrefix]
-    private static bool UseItemPrefix(PlayerController __instance)
+    private static bool UseItemPrefix (PlayerController __instance)
     {
         return CheckUseItem(__instance.g_Item.GetSelectItemType(Game.GetItemSelectPos()));
     }
 
-    private static bool CheckUseItem(ItemSystem.ItemType itemType)
+    private static bool CheckUseItem (ItemSystem.ItemType itemType)
     {
         if (itemType == ItemSystem.ItemType.SPMaxAdd)
         {
@@ -151,7 +151,7 @@ public static class TrialKeysPatches
     // Patch display of token item name and description
     [HarmonyPatch(typeof(ItemSystem), nameof(ItemSystem.GetItemHelp))]
     [HarmonyPrefix]
-    private static bool GetItemHelpPrefix(ref string __result, ItemSystem.ItemType Type)
+    private static bool GetItemHelpPrefix (ref string __result, ItemSystem.ItemType Type)
     {
         if (Type == ItemSystem.ItemType.SPMaxAdd)
         {
@@ -165,7 +165,7 @@ public static class TrialKeysPatches
 
     [HarmonyPatch(typeof(ItemSystem), nameof(ItemSystem.GetItemName))]
     [HarmonyPrefix]
-    private static bool GetItemNamePrefix(ref string __result, ItemSystem.ItemType Type)
+    private static bool GetItemNamePrefix (ref string __result, ItemSystem.ItemType Type)
     {
         if (Type == ItemSystem.ItemType.SPMaxAdd)
         {

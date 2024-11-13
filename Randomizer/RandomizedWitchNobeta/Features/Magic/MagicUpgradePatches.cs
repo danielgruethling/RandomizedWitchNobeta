@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
-using RandomizedWitchNobeta.Shared;
 using RandomizedWitchNobeta.Archipelago;
-using RandomizedWitchNobeta.Generation;
+using RandomizedWitchNobeta.Shared;
 using RandomizedWitchNobeta.Utils;
 using RandomizedWitchNobeta.Utils.Nobeta;
 
@@ -12,7 +11,7 @@ public static class MagicUpgradePatches
     // Update magic level on magic unlocked
     [HarmonyPatch(typeof(WizardGirlManage), nameof(WizardGirlManage.GetMagicLevelSuffix))]
     [HarmonyPostfix]
-    private static void GetMagicLevelSuffixPostfix(WizardGirlManage __instance)
+    private static void GetMagicLevelSuffixPostfix (WizardGirlManage __instance)
     {
         if (Singletons.RuntimeVariables is { } runtimeVariables)
         {
@@ -29,7 +28,7 @@ public static class MagicUpgradePatches
 
     [HarmonyPatch(typeof(NPCManage), nameof(NPCManage.Hit))]
     [HarmonyPostfix]
-    private static void NpcHitPostfix(NPCManage __instance)
+    private static void NpcHitPostfix (NPCManage __instance)
     {
         if (Singletons.RuntimeVariables is not { } runtimeVariables)
         {
@@ -45,7 +44,7 @@ public static class MagicUpgradePatches
         // Track boss death
         if (NpcUtils.ValidBosses.Contains(__instance.name) && __instance.GetIsDeath())
         {
-            if(runtimeVariables.Settings.Archipelago)
+            if (runtimeVariables.Settings.Archipelago)
             {
                 ArchipelagoConnector.Session.Locations.CompleteLocationChecks(ArchipelagoConnector.Session.Locations.GetLocationIdFromName("Little Witch Nobeta", ArchipelagoData.GameLocationToDescriptiveLocation(__instance.name)));
             }
@@ -65,7 +64,7 @@ public static class MagicUpgradePatches
         }
     }
 
-    private static void UpdateMagicLevels(PlayerStatsData stats)
+    private static void UpdateMagicLevels (PlayerStatsData stats)
     {
         var globalLevel = Singletons.RuntimeVariables.GlobalMagicLevel;
 

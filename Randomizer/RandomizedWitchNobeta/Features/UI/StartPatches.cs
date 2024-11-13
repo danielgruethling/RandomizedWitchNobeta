@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
 using Random = System.Random;
 
 namespace RandomizedWitchNobeta.Features.UI;
@@ -26,7 +25,7 @@ public static class StartPatches
     public static string SeedSettingsPath { get; } = Path.Combine(Plugin.ConfigDirectory.FullName, "SeedSettings.json");
     public static string BonusSettingsPath { get; } = Path.Combine(Plugin.ConfigDirectory.FullName, "BonusSettings.json");
 
-    static StartPatches()
+    static StartPatches ()
     {
         if (Singletons.SettingsService is { } settingsService)
         {
@@ -34,7 +33,7 @@ public static class StartPatches
         }
     }
 
-    private static void UpdateSeedHash(SeedSettings settings)
+    private static void UpdateSeedHash (SeedSettings settings)
     {
         Singletons.Dispatcher.Enqueue(() =>
         {
@@ -51,7 +50,7 @@ public static class StartPatches
 
     [HarmonyPatch(typeof(UIOpeningMenu), nameof(UIOpeningMenu.Init))]
     [HarmonyPostfix]
-    private static void OpeningMenuInitPostfix(UIOpeningMenu __instance)
+    private static void OpeningMenuInitPostfix (UIOpeningMenu __instance)
     {
         var newGameObject = __instance.transform.Find("Foreground/NewGame").gameObject;
 
@@ -73,14 +72,14 @@ public static class StartPatches
                 Singletons.RuntimeVariables = runtimeVariables;
             }
             // Remove Load button if no run is resume-able
-            else
+            /*else
             {
                 Object.Destroy(loadGameObject);
 
                 // Reorder UI elements
                 newGameUIHandler.selectDown = optionsUIHandler;
                 optionsUIHandler.selectUp = newGameUIHandler;
-            }
+            }*/
 
             // Replace copyright text to add seed hash
             var copyrightGameObject = __instance.transform.Find("Foreground/Copyright").gameObject;
@@ -118,7 +117,7 @@ public static class StartPatches
 
     [HarmonyPatch(typeof(UIOpeningMenu), nameof(UIOpeningMenu.Appear))]
     [HarmonyPostfix]
-    private static void OpeningMenuAppearPostfix(UIOpeningMenu __instance)
+    private static void OpeningMenuAppearPostfix (UIOpeningMenu __instance)
     {
         __instance.navigator.DeselectHandler(__instance.handlers[1]);
         __instance.OnHandlerDeselected(__instance.handlers[1]);
@@ -132,7 +131,7 @@ public static class StartPatches
 
     [HarmonyPatch(typeof(UIGameSave), nameof(UIGameSave.Appear))]
     [HarmonyPrefix]
-    private static bool UIGameSaveAppearPrefix(UIGameSave __instance, Action completeHandler)
+    private static bool UIGameSaveAppearPrefix (UIGameSave __instance, Action completeHandler)
     {
         Plugin.Log.LogDebug("UIGameSave Appear");
 
@@ -151,7 +150,7 @@ public static class StartPatches
         return false;
     }
 
-    private static void StartRandomizer()
+    private static void StartRandomizer ()
     {
         // Make sure bonus settings are loaded correctly
         SettingsService.ReloadBonusSettings();
@@ -182,7 +181,7 @@ public static class StartPatches
         Plugin.Log.LogMessage("Creating save...");
 
         // Generate the save and apply flag modifications
-        var gameSave = new GameSave(GameSaveIndex, (GameDifficulty) settings.Difficulty)
+        var gameSave = new GameSave(GameSaveIndex, (GameDifficulty)settings.Difficulty)
         {
             basic =
             {
@@ -193,9 +192,15 @@ public static class StartPatches
             },
             flags =
             {
-                stage01OpenDoor01 = true,
-                stage01Room08Door = true,
-                stage02L03BackDoor = true
+                stage01OpenDoor01 = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage01OpenDoor02 = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage01OpenDoor03 = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage01Room08Door = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage02OpenDoor = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage02L03BackDoor = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage03Room01DoorL = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage03Room01DoorR = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
+                stage03Stage04BackDoor = settings.ShortcutGateBehaviour == SeedSettings.ShortcutGateBehaviourType.AlwaysOpen,
             },
             stats =
             {
@@ -215,7 +220,7 @@ public static class StartPatches
         // Load a random skin if enabled
         if (AppearancePatches.RandomizeSkin == BonusSettings.RandomSkin.Once)
         {
-            AppearancePatches.SelectedSkin = (GameSkin) Random.Shared.Next(0, AppearancePatches.AvailableSkins.Length);
+            AppearancePatches.SelectedSkin = (GameSkin)Random.Shared.Next(0, AppearancePatches.AvailableSkins.Length);
         }
 
         // Load save
@@ -227,7 +232,7 @@ public static class StartPatches
         Singletons.Timers.Reset();
     }
 
-    private static void ResumeRandomizer()
+    private static void ResumeRandomizer ()
     {
         if (Game.ReadGameSave(GameSaveIndex, out var gameSave) == ReadFileResult.Succeed)
         {

@@ -8,9 +8,9 @@ public static class ChestContentShufflePatches
 {
     [HarmonyPatch(typeof(TreasureBox), nameof(TreasureBox.Init))]
     [HarmonyPostfix]
-    private static void InitPostfix(ref TreasureBox __instance)
+    private static void InitPostfix (ref TreasureBox __instance)
     {
-        if(Singletons.RuntimeVariables is { } runtimeVariables && runtimeVariables.Settings.Archipelago == true)
+        if (Singletons.RuntimeVariables is { } runtimeVariables && runtimeVariables.Settings.Archipelago == true)
         {
             __instance.ItemType = ItemSystem.ItemType.Null;
         }

@@ -20,12 +20,12 @@ public static class SerializeUtils
         }
     };
 
-    public static string SerializeIndented<TValue>(TValue value)
+    public static string SerializeIndented<TValue> (TValue value)
     {
         return JsonSerializer.Serialize(value, _options);
     }
 
-    public static TValue Deserialize<TValue>(string json)
+    public static TValue Deserialize<TValue> (string json)
     {
         return JsonSerializer.Deserialize<TValue>(json, _options);
     }

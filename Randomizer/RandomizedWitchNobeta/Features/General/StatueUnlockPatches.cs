@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RandomizedWitchNobeta.Archipelago;
 using RandomizedWitchNobeta.Utils;
+using System.Linq;
 using UnityEngine;
 
 namespace RandomizedWitchNobeta.Features.General;
@@ -16,23 +14,23 @@ public static class StatueUnlockPatches
 
     [HarmonyPatch(typeof(SceneManager), nameof(SceneManager.OnSceneInitComplete))]
     [HarmonyPostfix]
-    private static void OnSceneInitCompletePostfix()
+    private static void OnSceneInitCompletePostfix ()
     {
         _statues = UnityUtils.FindComponentsByTypeForced<SavePoint>().Where(savePoint => savePoint.EventType == PassiveEvent.PassiveEventType.SavePoint).ToArray();
     }
 
     [HarmonyPatch(typeof(Game), nameof(Game.EnterLoaderScene))]
     [HarmonyPrefix]
-    private static void EnterLoaderScenePostfix()
+    private static void EnterLoaderScenePostfix ()
     {
         _statues = null;
     }
 
     [HarmonyPatch(typeof(WizardGirlManage), nameof(WizardGirlManage.Update))]
     [HarmonyPostfix]
-    private static void OnWizardGirlUpdate(WizardGirlManage __instance)
+    private static void OnWizardGirlUpdate (WizardGirlManage __instance)
     {
-        if(Singletons.SceneManager.stageId > 1 && __instance.GetPlayerStatus() == NobetaState.SavePointUI)
+        if (Singletons.SceneManager.stageId > 1 && __instance.GetPlayerStatus() == NobetaState.SavePointUI)
         {
             // Check if new items received while offline
             ArchipelagoConnector.HandleItems();

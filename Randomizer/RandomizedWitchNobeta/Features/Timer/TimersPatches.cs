@@ -7,7 +7,7 @@ public static class TimersPatches
 {
     [HarmonyPatch(typeof(Game), nameof(Game.SwitchTitleScene))]
     [HarmonyPrefix]
-    private static void OSwitchTitleScenePrefix()
+    private static void OSwitchTitleScenePrefix ()
     {
         if (Singletons.Timers is { } timers)
         {
@@ -17,7 +17,7 @@ public static class TimersPatches
 
     [HarmonyPatch(typeof(SceneManager), nameof(SceneManager.OnSceneInitComplete))]
     [HarmonyPostfix]
-    private static void OnSceneInitCompletePostfix()
+    private static void OnSceneInitCompletePostfix ()
     {
         if (Singletons.Timers is { } timers)
         {

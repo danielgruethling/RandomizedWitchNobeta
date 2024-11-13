@@ -7,7 +7,7 @@ public static class ItemPoolSizePatches
 {
     [HarmonyPatch(typeof(ItemSystem), nameof(ItemSystem.Init))]
     [HarmonyPostfix]
-    private static void ItemSystemInitPostfix(ItemSystem __instance)
+    private static void ItemSystemInitPostfix (ItemSystem __instance)
     {
         foreach (var itemPool in __instance.itemPoolMap.Values)
         {

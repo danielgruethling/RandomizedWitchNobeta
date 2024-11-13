@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +15,7 @@ public static class TeleportMenuPatches
 
     [HarmonyPatch(typeof(UITeleport), nameof(UITeleport.Init))]
     [HarmonyPostfix]
-    private static void UITeleportInitPostfix(UITeleport __instance)
+    private static void UITeleportInitPostfix (UITeleport __instance)
     {
         var root = __instance.transform;
 
@@ -47,7 +47,7 @@ public static class TeleportMenuPatches
         var stage6Handlers = uiHandlers.Where(uiHandler => uiHandler.name.StartsWith("Handler_6")).ToArray();
 
         // Vertical navigation
-        for (int i = 0; i < stage4Handlers.Length; i++)
+        for (int i = 0 ; i < stage4Handlers.Length ; i++)
         {
             stage4Handlers[i].selectDown = stage5Handlers[i];
             stage5Handlers[i].selectUp = stage4Handlers[i];
@@ -74,7 +74,7 @@ public static class TeleportMenuPatches
 
     [HarmonyPatch(typeof(UITeleport), nameof(UITeleport.Appear))]
     [HarmonyPostfix]
-    private static void UITeleportAppearPostfix()
+    private static void UITeleportAppearPostfix ()
     {
         foreach (var topHandler in _topHandlers)
         {

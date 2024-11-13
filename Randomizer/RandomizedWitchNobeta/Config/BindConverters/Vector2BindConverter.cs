@@ -8,7 +8,7 @@ public class Vector2BindConverter : IBindConverter
 {
     private static string GroupSeparator => NumberFormatInfo.CurrentInfo.NumberGroupSeparator;
 
-    public string Serialize(object value)
+    public string Serialize (object value)
     {
         if (value is not Vector2 vector2)
         {
@@ -18,7 +18,7 @@ public class Vector2BindConverter : IBindConverter
         return vector2.ToString();
     }
 
-    public object Deserialize(string text)
+    public object Deserialize (string text)
     {
         var span = text.AsSpan();
         var separator = NumberFormatInfo.CurrentInfo.NumberGroupSeparator;

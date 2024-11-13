@@ -1,6 +1,6 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Linq;
-using HarmonyLib;
 
 namespace RandomizedWitchNobeta.Utils.Nobeta;
 
@@ -10,7 +10,7 @@ public static class SceneUtils
 
     public static bool IsLoading => UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Loader";
 
-    public static AreaCheck FindLastAreaCheck()
+    public static AreaCheck FindLastAreaCheck ()
     {
         var sceneHides = UnityUtils.FindComponentsByTypeForced<SceneIsHide>().Where(hide => !hide.g_bIsHide);
         var areaChecks = UnityUtils.FindComponentsByTypeForced<AreaCheck>();
@@ -22,27 +22,21 @@ public static class SceneUtils
         return checks.First(check => check.ShowArea.Count == sceneHides.Count());
     }
 
-    public static void ReturnToStatue()
-    {
-        Singletons.Dispatcher.Enqueue(() =>
-        {
-            if (IsGameScene && Singletons.UIPauseMenu is { } pauseMenu)
-            {
-                pauseMenu.ReloadStage();
-            }
-        });
-    }
+    public static void ReturnToStatue () => Singletons.Dispatcher.Enqueue(() =>
+                                                 {
+                                                     if (IsGameScene && Singletons.UIPauseMenu is { } pauseMenu)
+                                                     {
+                                                         pauseMenu.ReloadStage();
+                                                     }
+                                                 });
 
-    public static void ReturnToTitleScreen()
-    {
-        Singletons.Dispatcher.Enqueue(() =>
-        {
-            UiHelpers.ForceCloseAllUi();
-            Game.SwitchTitleScene(false);
-        });
-    }
+    public static void ReturnToTitleScreen () => Singletons.Dispatcher.Enqueue(() =>
+                                                      {
+                                                          UiHelpers.ForceCloseAllUi();
+                                                          Game.SwitchTitleScene(false);
+                                                      });
 
-    public static int SceneStartSavePoint(int destinationScene) => destinationScene switch
+    public static int SceneStartSavePoint (int destinationScene) => destinationScene switch
     {
         2 => -1,
         3 => -1,
@@ -55,7 +49,7 @@ public static class SceneUtils
 
     [HarmonyPatch(typeof(SceneManager), nameof(SceneManager.OnSceneInitComplete))]
     [HarmonyPostfix]
-    private static void OnSceneInitCompletePostfix()
+    private static void OnSceneInitCompletePostfix ()
     {
         Plugin.Log.LogDebug($"New scene init complete: {Game.sceneManager.stageName}");
 
@@ -64,14 +58,14 @@ public static class SceneUtils
 
     [HarmonyPatch(typeof(Game), nameof(Game.EnterLoaderScene))]
     [HarmonyPrefix]
-    private static void EnterLoaderScenePrefix()
+    private static void EnterLoaderScenePrefix ()
     {
         Plugin.Log.LogDebug("Entered loader scene");
 
         IsGameScene = false;
     }
 
-    public static int SceneNumberFromName(string sceneName) => sceneName switch
+    public static int SceneNumberFromName (string sceneName) => sceneName switch
     {
         "Act02_01" => 2,
         "Act03_01" => 3,
@@ -82,7 +76,7 @@ public static class SceneUtils
         _ => -1
     };
 
-    public static GameStage SceneNumberToGameStage(int sceneNumber) => sceneNumber switch
+    public static GameStage SceneNumberToGameStage (int sceneNumber) => sceneNumber switch
     {
         2 => GameStage.Act02_01,
         3 => GameStage.Act03_01,
@@ -93,7 +87,7 @@ public static class SceneUtils
         _ => throw new ArgumentOutOfRangeException(nameof(sceneNumber), sceneNumber, null)
     };
 
-    public static string FriendlySceneName(int sceneNumber) => sceneNumber switch
+    public static string FriendlySceneName (int sceneNumber) => sceneNumber switch
     {
         2 => "Okun Shrine - Entrance Hall",
         3 => "Okun Shrine - Underground Cave",
@@ -104,7 +98,7 @@ public static class SceneUtils
         _ => throw new ArgumentOutOfRangeException(nameof(sceneNumber), sceneNumber, null)
     };
 
-    public static int SceneStartSouls(int sceneNumber) => sceneNumber switch
+    public static int SceneStartSouls (int sceneNumber) => sceneNumber switch
     {
         2 => 0,
         3 => 60,

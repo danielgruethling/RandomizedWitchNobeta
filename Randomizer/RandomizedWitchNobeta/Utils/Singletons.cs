@@ -35,14 +35,14 @@ public static class Singletons
 
     [HarmonyPatch(typeof(Game), nameof(Game.Awake))]
     [HarmonyPostfix]
-    private static void GameAwakePostfix(Game __instance)
+    private static void GameAwakePostfix (Game __instance)
     {
         GameInstance = __instance;
     }
 
     [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.UpdateSkin))]
     [HarmonyPostfix]
-    private static void PlayerControllerUpdateSkinPostfix(PlayerController __instance, NobetaSkin skin)
+    private static void PlayerControllerUpdateSkinPostfix (PlayerController __instance, NobetaSkin skin)
     {
         Plugin.Log.LogInfo("NobetaSkin updated");
 
@@ -51,7 +51,7 @@ public static class Singletons
 
     [HarmonyPatch(typeof(NobetaSkin), nameof(NobetaSkin.Dispose))]
     [HarmonyPrefix]
-    private static void NobetaSkinDisposePrefix(NobetaSkin __instance)
+    private static void NobetaSkinDisposePrefix (NobetaSkin __instance)
     {
         Plugin.Log.LogInfo("NobetaSkin disposed");
 
@@ -63,7 +63,7 @@ public static class Singletons
 
     [HarmonyPatch(typeof(WizardGirlManage), nameof(WizardGirlManage.Init))]
     [HarmonyPostfix]
-    private static void WizardGirlManageInitPostfix(WizardGirlManage __instance)
+    private static void WizardGirlManageInitPostfix (WizardGirlManage __instance)
     {
         Plugin.Log.LogInfo("WizardGirlManage created");
 
@@ -72,7 +72,7 @@ public static class Singletons
 
     [HarmonyPatch(typeof(WizardGirlManage), nameof(WizardGirlManage.Dispose))]
     [HarmonyPrefix]
-    private static void WizardGirlManageDisposePrefix(WizardGirlManage __instance)
+    private static void WizardGirlManageDisposePrefix (WizardGirlManage __instance)
     {
         Plugin.Log.LogInfo("WizardGirlManage disposed");
 
@@ -81,7 +81,7 @@ public static class Singletons
 
     [HarmonyPatch(typeof(Game), nameof(Game.SwitchGameSave))]
     [HarmonyPostfix]
-    private static void StartGamePlayPostfix(GameSave gameSave)
+    private static void StartGamePlayPostfix (GameSave gameSave)
     {
         Plugin.Log.LogInfo("Save loaded");
 
@@ -90,21 +90,21 @@ public static class Singletons
 
     [HarmonyPatch(typeof(Game), nameof(Game.SwitchTitleScene))]
     [HarmonyPostfix]
-    private static void SwitchTitleScenePostfix()
+    private static void SwitchTitleScenePostfix ()
     {
         GameSave = null;
     }
 
     [HarmonyPatch(typeof(SceneManager), nameof(SceneManager.Enter))]
     [HarmonyPostfix]
-    private static void EnterScenePostfix()
+    private static void EnterScenePostfix ()
     {
         Plugin.Log.LogInfo("Entered scene");
     }
 
     [HarmonyPatch(typeof(UIPauseMenu), nameof(UIPauseMenu.Init))]
     [HarmonyPostfix]
-    private static void UIPauseMenuInit(UIPauseMenu __instance)
+    private static void UIPauseMenuInit (UIPauseMenu __instance)
     {
         Plugin.Log.LogInfo("UIPauseMenu Init");
 
@@ -113,7 +113,7 @@ public static class Singletons
 
     [HarmonyPatch(typeof(GameUIManager), nameof(global::GameUIManager.Init))]
     [HarmonyPostfix]
-    private static void GameUIManagerInit(GameUIManager __instance)
+    private static void GameUIManagerInit (GameUIManager __instance)
     {
         Plugin.Log.LogInfo("GameUIManager Init");
 

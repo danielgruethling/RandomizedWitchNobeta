@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RandomizedWitchNobeta.Utils;
+using System.Collections.Generic;
 
 namespace RandomizedWitchNobeta.Features.Combat;
 
@@ -13,7 +13,7 @@ public static class DamageModifiersPatches
     // Damage received patches
     [HarmonyPatch(typeof(WizardGirlManage), nameof(WizardGirlManage.Hit))]
     [HarmonyPrefix]
-    private static void WizardGirlManageHitPrefix(AttackData Data, bool bIgnoreDodge = false)
+    private static void WizardGirlManageHitPrefix (AttackData Data, bool bIgnoreDodge = false)
     {
         if (Singletons.RuntimeVariables is not { } runtimeVariables)
         {
@@ -53,7 +53,7 @@ public static class DamageModifiersPatches
     // Clear the modified data set to avoid it getting too big
     [HarmonyPatch(typeof(SceneManager), nameof(SceneManager.OnSceneInitComplete))]
     [HarmonyPostfix]
-    private static void OnSceneInitCompletePostfix()
+    private static void OnSceneInitCompletePostfix ()
     {
         _modifiedData.Clear();
     }

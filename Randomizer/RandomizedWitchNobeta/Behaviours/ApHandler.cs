@@ -8,7 +8,6 @@ namespace RandomizedWitchNobeta.Behaviours
 {
     public class ApHandler : MonoBehaviour
     {
-
         public const string ModDisplayInfo = $"{MyPluginInfo.PLUGIN_NAME} v{MyPluginInfo.PLUGIN_VERSION}";
         private const string APDisplayInfo = $"Archipelago v{ArchipelagoClient.APVersion}";
         public static ArchipelagoClient ArchipelagoClient;
@@ -18,6 +17,7 @@ namespace RandomizedWitchNobeta.Behaviours
         private static bool showPort = false;
         private static bool showPassword = false;
         private static string stringToEdit = "";
+
         private static readonly Dictionary<string, bool> editingFlags = new() {
             {"Player", false},
             {"Hostname", false},
@@ -25,7 +25,7 @@ namespace RandomizedWitchNobeta.Behaviours
             {"Password", false},
         };
 
-        private void Awake()
+        private void Awake ()
         {
             // Plugin startup logic
             ArchipelagoClient = new ArchipelagoClient();
@@ -34,7 +34,7 @@ namespace RandomizedWitchNobeta.Behaviours
             ArchipelagoConsole.LogMessage($"{ModDisplayInfo} loaded!");
         }
 
-        private void OnGUI()
+        private void OnGUI ()
         {
             var apWindowRect = new Rect();
 
@@ -46,7 +46,7 @@ namespace RandomizedWitchNobeta.Behaviours
             GUI.Window(101, apWindowRect, new Action<int>(ArchipelagoConfigEditorWindow), "Archipelago Connection");
         }
 
-        private static void ArchipelagoConfigEditorWindow(int windowID)
+        private static void ArchipelagoConfigEditorWindow (int windowID)
         {
             GUI.skin.label.fontSize = (int)(20f * guiScale);
             GUI.skin.button.fontSize = (int)(17f * guiScale);
@@ -131,7 +131,7 @@ namespace RandomizedWitchNobeta.Behaviours
             if (DoConnect) ArchipelagoClient.Connect();
         }
 
-        private void Update()
+        private void Update ()
         {
             // Check if in menu
             if (Singletons.SceneManager == null)
@@ -200,10 +200,18 @@ namespace RandomizedWitchNobeta.Behaviours
                     if (submitKeyPressed) FinishEditingTextField(editingFlag.Key);
                 }
             }
+            else // not in menu so can be deathlinked
+            {
+                // try to kill player
+                if(ArchipelagoClient.Authenticated)
+                {
+                    ArchipelagoClient.DeathLinkHandler.KillPlayer();
+                }
+            }
         }
 
         //Place a visible cursor in a text label when editing the field
-        private static string TextWithCursor(string text, bool isEditing, bool showText)
+        private static string TextWithCursor (string text, bool isEditing, bool showText)
         {
             string baseText = showText ? text : new string('*', text.Length);
             if (!isEditing) return baseText;
@@ -222,31 +230,34 @@ namespace RandomizedWitchNobeta.Behaviours
         };
 
         //Set a connection setting value by fieldname
-        private static void SetConnectionSetting(string fieldName, string value)
+        private static void SetConnectionSetting (string fieldName, string value)
         {
             switch (fieldName)
             {
                 case "Player":
                     ArchipelagoClient.ServerData.SlotName = value;
                     return;
+
                 case "Hostname":
                     ArchipelagoClient.ServerData.Hostname = value;
                     return;
+
                 case "Port":
                     ArchipelagoClient.ServerData.Port = value;
                     return;
+
                 case "Password":
                     ArchipelagoClient.ServerData.Password = value;
                     return;
+
                 default:
                     return;
             }
         }
 
         //Clear all field editing flags (since we do this in a few places)
-        private static void ClearAllEditingFlags()
+        private static void ClearAllEditingFlags ()
         {
-
             List<string> fieldKeys = new(editingFlags.Keys);
             foreach (string fieldKey in fieldKeys)
             {
@@ -255,7 +266,7 @@ namespace RandomizedWitchNobeta.Behaviours
         }
 
         //Initialize a text field for editing
-        private static void BeginEditingTextField(string fieldName)
+        private static void BeginEditingTextField (string fieldName)
         {
             if (editingFlags[fieldName]) return; //can't begin if we're already editing this field
 
@@ -273,7 +284,7 @@ namespace RandomizedWitchNobeta.Behaviours
         }
 
         //finalize editing a text field and save the changes
-        private static void FinishEditingTextField(string fieldName)
+        private static void FinishEditingTextField (string fieldName)
         {
             if (!editingFlags[fieldName]) return; //can't finish if we're not editing this field
 
@@ -283,7 +294,7 @@ namespace RandomizedWitchNobeta.Behaviours
             editingFlags[fieldName] = false;
         }
 
-        private static void HandleEditButton(string fieldName)
+        private static void HandleEditButton (string fieldName)
         {
             if (editingFlags[fieldName])
             {
@@ -295,9 +306,8 @@ namespace RandomizedWitchNobeta.Behaviours
             }
         }
 
-        private static void HandlePasteButton(string fieldName)
+        private static void HandlePasteButton (string fieldName)
         {
-
             SetConnectionSetting(fieldName, GUIUtility.systemCopyBuffer);
             if (editingFlags[fieldName])
             {
@@ -306,7 +316,7 @@ namespace RandomizedWitchNobeta.Behaviours
             }
         }
 
-        private static void HandleClearButton(string fieldName)
+        private static void HandleClearButton (string fieldName)
         {
             SetConnectionSetting(fieldName, "");
             if (editingFlags[fieldName]) stringToEdit = "";

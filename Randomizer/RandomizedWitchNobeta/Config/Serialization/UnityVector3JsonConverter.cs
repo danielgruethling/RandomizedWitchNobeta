@@ -7,7 +7,7 @@ namespace RandomizedWitchNobeta.Config.Serialization;
 
 public class UnityVector3JsonConverter : JsonConverter<Vector3>
 {
-    public override Vector3 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Vector3 Read (ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         reader.Read();
 
@@ -27,7 +27,7 @@ public class UnityVector3JsonConverter : JsonConverter<Vector3>
         return new Vector3(x, y, z);
     }
 
-    public override void Write(Utf8JsonWriter writer, Vector3 value, JsonSerializerOptions options)
+    public override void Write (Utf8JsonWriter writer, Vector3 value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
 

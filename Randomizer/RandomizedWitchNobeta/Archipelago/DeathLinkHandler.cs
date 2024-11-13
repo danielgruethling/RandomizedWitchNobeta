@@ -9,7 +9,7 @@ namespace RandomizedWitchNobeta.Archipelago;
 public class DeathLinkHandler
 {
     private static bool deathLinkEnabled;
-    private string slotName;
+    private readonly string slotName;
     private readonly DeathLinkService service;
     private readonly Queue<DeathLink> deathLinks = new();
 
@@ -19,7 +19,7 @@ public class DeathLinkHandler
     /// <param name="deathLinkService">The new DeathLinkService that our handler will use to send and
     /// receive death links</param>
     /// <param name="enableDeathLink">Whether we should enable death link or not on startup</param>
-    public DeathLinkHandler(DeathLinkService deathLinkService, string name, bool enableDeathLink = false)
+    public DeathLinkHandler (DeathLinkService deathLinkService, string name, bool enableDeathLink = false)
     {
         service = deathLinkService;
         service.OnDeathLinkReceived += DeathLinkReceived;
@@ -35,7 +35,7 @@ public class DeathLinkHandler
     /// <summary>
     /// enables/disables death link
     /// </summary>
-    public void ToggleDeathLink()
+    public void ToggleDeathLink ()
     {
         deathLinkEnabled = !deathLinkEnabled;
 
@@ -53,7 +53,7 @@ public class DeathLinkHandler
     /// what happens when we receive a deathLink
     /// </summary>
     /// <param name="deathLink">Received Death Link object to handle</param>
-    private void DeathLinkReceived(DeathLink deathLink)
+    private void DeathLinkReceived (DeathLink deathLink)
     {
         deathLinks.Enqueue(deathLink);
 
@@ -66,7 +66,7 @@ public class DeathLinkHandler
     /// can be called when in a valid state to kill the player, dequeueing and immediately killing the player with a
     /// message if we have a death link in the queue
     /// </summary>
-    public void KillPlayer()
+    public void KillPlayer ()
     {
         try
         {
@@ -81,7 +81,7 @@ public class DeathLinkHandler
                 var wizardGirl = Singletons.WizardGirl;
                 wizardGirl.Hit(new() { g_fStrength = float.MaxValue }, true);
             });
-            
+
             Plugin.Log.LogMessage(cause);
         }
         catch (Exception e)
@@ -95,15 +95,12 @@ public class DeathLinkHandler
     /// </summary>
     /// <param name="deathLink">death link object to get relevant info from</param>
     /// <returns></returns>
-    private string GetDeathLinkCause(DeathLink deathLink)
-    {
-        return $"Received death from {deathLink.Source}";
-    }
+    private static string GetDeathLinkCause (DeathLink deathLink) => $"Received death from {deathLink.Source}";
 
     /// <summary>
     /// called to send a death link to the multiworld
     /// </summary>
-    public void SendDeathLink()
+    public void SendDeathLink ()
     {
         try
         {

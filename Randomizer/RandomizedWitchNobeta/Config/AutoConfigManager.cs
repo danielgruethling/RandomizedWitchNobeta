@@ -1,16 +1,16 @@
-﻿using System;
+﻿using BepInEx.Configuration;
+using RandomizedWitchNobeta.Config.BindConverters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
-using BepInEx.Configuration;
-using RandomizedWitchNobeta.Config.BindConverters;
 
 namespace RandomizedWitchNobeta.Config;
 
 public class AutoConfigManager
 {
-    private record BindEntry(ConfigEntryBase Entry, IBindConverter BindConverter = null);
+    private record BindEntry (ConfigEntryBase Entry, IBindConverter BindConverter = null);
 
     private readonly ConfigFile _configFile;
     private readonly Dictionary<FieldInfo, BindEntry> _bindEntries;
@@ -44,13 +44,13 @@ public class AutoConfigManager
         { typeof(Vector4), new Vector4BindConverter() }
     };
 
-    public AutoConfigManager(ConfigFile configFile)
+    public AutoConfigManager (ConfigFile configFile)
     {
         _configFile = configFile;
         _bindEntries = new Dictionary<FieldInfo, BindEntry>();
     }
 
-    private void Init()
+    private void Init ()
     {
         // Find class that contains a section attribute
         var sectionClasses = Assembly.GetExecutingAssembly().DefinedTypes
@@ -125,7 +125,7 @@ public class AutoConfigManager
         _initDone = true;
     }
 
-    public void LoadValuesToFields()
+    public void LoadValuesToFields ()
     {
         if (!_initDone)
         {
@@ -150,7 +150,7 @@ public class AutoConfigManager
         }
     }
 
-    public void FetchValuesFromFields()
+    public void FetchValuesFromFields ()
     {
         if (!_initDone)
         {
@@ -171,12 +171,12 @@ public class AutoConfigManager
         }
     }
 
-    private object GetValueFromField(FieldInfo fieldInfo)
+    private object GetValueFromField (FieldInfo fieldInfo)
     {
         return fieldInfo.GetValue(null);
     }
 
-    private void SetValueToField(FieldInfo fieldInfo, object value)
+    private void SetValueToField (FieldInfo fieldInfo, object value)
     {
         fieldInfo.SetValue(null, value);
     }
