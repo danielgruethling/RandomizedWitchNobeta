@@ -31,7 +31,7 @@ namespace RandomizedWitchNobeta.Archipelago
 
             Session = ArchipelagoSessionFactory.CreateSession(server);
             Session.Items.ItemReceived += Items_ItemReceived;
-            var result = Session.TryConnectAndLogin("Little Witch Nobeta", slotName, ItemsHandlingFlags.AllItems, new("0.4.4"), null, null, password, true);
+            var result = Session.TryConnectAndLogin("Little Witch Nobeta", slotName, ItemsHandlingFlags.AllItems, new("0.6.1"), null, null, password, true);
             if(result.Successful)
             {
                 Plugin.Log.LogMessage($"Connected to AP server.");
@@ -162,14 +162,14 @@ namespace RandomizedWitchNobeta.Archipelago
                     string senderName = $"Unknown player {item.Player}";
                     try
                     {
-                        senderName = Session.Players.GetPlayerName(item.Player);
+                        senderName = Session.Players.GetPlayerName(item.Player.Slot);
                     }
                     catch (Exception) { }
 
                     string senderLocationName = $"Unknown location {item.LocationId}";
                     try
                     {
-                        senderName = item.ItemDisplayName;
+                        senderLocationName = item.LocationDisplayName;
                     }
                     catch (Exception) { }
 
